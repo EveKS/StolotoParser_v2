@@ -1,6 +1,6 @@
 ﻿namespace StolotoParser_v2
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Требуется переменная конструктора.
@@ -28,9 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(299, 0);
+            this.MaximumSize = new System.Drawing.Size(315, 580);
+            this.MinimumSize = new System.Drawing.Size(315, 0);
+            this.Name = "MainForm";
+            this.Text = "StolotoParser";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
