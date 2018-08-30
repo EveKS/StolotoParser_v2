@@ -2,10 +2,8 @@
 using StolotoParser_v2.Services;
 using StolotoParser_v2.UserControls;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Windows.Forms;
 
 namespace StolotoParser_v2.Presenters
 {
@@ -21,8 +19,10 @@ namespace StolotoParser_v2.Presenters
 
         private readonly IHtmlParser _htmlParser;
 
+        private readonly IFileWriteService _fileWriteService;
+
         public MainPresenter(IMainForm mainForm, IJsonService jsonService, IHtmlService htmlService,
-            IHtmlParser htmlParser)
+            IHtmlParser htmlParser, IFileWriteService fileWriteService)
         {
             this._mainForm = mainForm;
 
@@ -31,6 +31,8 @@ namespace StolotoParser_v2.Presenters
             this._htmlService = htmlService;
 
             this._htmlParser = htmlParser;
+
+            this._fileWriteService = fileWriteService;
 
             this._mainForm.OnFormLoad += new EventHandler(this._mainForm_OnLoad);
 
@@ -42,7 +44,7 @@ namespace StolotoParser_v2.Presenters
             if(sender is ILotaryInfoControl)
             {
                 new ElementPresenter(sender as ILotaryInfoControl, this._jsonService, this._htmlService,
-                    this._htmlParser, this._appSettings.Format);
+                    this._htmlParser, this._fileWriteService, this._appSettings.Format);
             }
         }
 
@@ -55,7 +57,7 @@ namespace StolotoParser_v2.Presenters
 
         private void GetSettings()
         {
-            using (StreamReader sr = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json")))
+            using (StreamReader sr = new StreamReader(Path.Combine(Application.StartupPath, "appsettings.json")))
             {
                 this._appSettings = this._jsonService.JsonConvertDeserializeObject<AppSettings>(sr.ReadToEnd());
             }

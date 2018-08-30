@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\Element.cs" />
+    <Compile Include="Services\IFileWriteService.cs" />
     <Compile Include="Models\PostResulModel.cs" />
     <Compile Include="Models\LotaryToolTip.cs" />
     <Compile Include="Models\ProcessInfo.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\FileWriteService.cs" />
     <Compile Include="Services\HtmlParser.cs" />
     <Compile Include="Services\HtmlService.cs" />
     <Compile Include="Services\IHtmlParser.cs" />

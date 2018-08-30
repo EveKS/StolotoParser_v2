@@ -19,11 +19,18 @@ namespace StolotoParser_v2
             Application.SetCompatibleTextRenderingDefault(false);
 
             MainForm form = new MainForm();
+
             IJsonService jsonService = new JsonService();
+
             IHtmlService htmlService = new HtmlService();
+
             IHtmlParser htmlParser = new HtmlParser();
 
-            var presenter = new MainPresenter(form, jsonService, htmlService, htmlParser);
+            IFileWriteService fileWriteService = new FileWriteService();
+
+            //FileWriteService : IFileWriteService
+
+            var presenter = new MainPresenter(form, jsonService, htmlService, htmlParser, fileWriteService);
 
             Application.Run(form);
         }

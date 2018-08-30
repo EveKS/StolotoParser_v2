@@ -11,6 +11,8 @@ namespace StolotoParser_v2.UserControls
 
         ProcessInfo ProcessInfo { set; }
 
+        bool Canceled { set; }
+
         event EventHandler BtnLotaryClick;
     }
 }

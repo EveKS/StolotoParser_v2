@@ -45,6 +45,30 @@ namespace StolotoParser_v2.UserControls
         #region IProcessInfoControl
         public event EventHandler BtnLotaryClick;
 
+        public bool Canceled
+        {
+            set
+            {
+                var setTextAction = new Action(() =>
+                {
+                    this._toggle = !value;
+
+                    this.btnLotary.Text = string.Format("Loaded {0}, start new", this._element.BtnName);
+
+                    this.numericUpDown.Enabled = value;
+                });
+
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(setTextAction);
+                }
+                else
+                {
+                    setTextAction();
+                }
+            }
+        }
+
         public Element Element
         {
             get
@@ -55,7 +79,7 @@ namespace StolotoParser_v2.UserControls
             {
                 this._element = value;
 
-                var settextAction = new Action(() =>
+                var setTextAction = new Action(() =>
                 {
                     this.btnLotary.Text = value.BtnName;
 
@@ -67,11 +91,11 @@ namespace StolotoParser_v2.UserControls
 
                 if (btnLotary.InvokeRequired)
                 {
-                    this.btnLotary.Invoke(settextAction);
+                    this.btnLotary.Invoke(setTextAction);
                 }
                 else
                 {
-                    settextAction();
+                    setTextAction();
                 }
             }
         }
@@ -119,7 +143,7 @@ namespace StolotoParser_v2.UserControls
             {
                 var settextAction = new Action(() =>
                 {
-                    var tTip = string.Format("Starus:\t{0}\nFrom:\t{1}", value.Status, value.Path);
+                    var tTip = string.Format("Starus:\t{0}\nPage:\t{1}", value.Status, value.Page);
 
                     toolTip.SetToolTip(this.btnLotary, tTip);
                 });
@@ -158,6 +182,8 @@ namespace StolotoParser_v2.UserControls
 
             if (this.BtnLotaryClick != null)
             {
+                this.toolStripProgressBar.Value = 0;
+
                 this.BtnLotaryClick.Invoke(this._toggle, e);
             }
         }

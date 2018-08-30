@@ -50,7 +50,7 @@ namespace StolotoParser_v2
                 var lotaryInfoControl = new LotaryInfoControl()
                 {
                     Element = element,
-                    Location = new Point(index * 50, 0),
+                    Location = new Point(0, index * 50),
                     Anchor = ((AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right)))
                 };
 
@@ -58,7 +58,7 @@ namespace StolotoParser_v2
 
                 if (this.NewElementEdded != null)
                 {
-                    this.NewElementEdded.Invoke(element, EventArgs.Empty);
+                    this.NewElementEdded.Invoke(lotaryInfoControl, EventArgs.Empty);
                 }
             }
         }
