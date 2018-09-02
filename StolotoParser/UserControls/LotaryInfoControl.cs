@@ -13,7 +13,6 @@ namespace StolotoParser_v2.UserControls
 {
     public partial class LotaryInfoControl : UserControl, ILotaryInfoControl
     {
-        #region head
         private bool _toggle;
 
         private int _step = 50;
@@ -23,7 +22,6 @@ namespace StolotoParser_v2.UserControls
         private int _maximum = 30000;
 
         private Element _element;
-        #endregion
 
         public LotaryInfoControl()
         {
@@ -42,7 +40,6 @@ namespace StolotoParser_v2.UserControls
             this.btnLotary.Click += BtnLotary_Click;
         }
 
-        #region IProcessInfoControl
         public event EventHandler BtnLotaryClick;
 
         public bool Canceled
@@ -134,9 +131,7 @@ namespace StolotoParser_v2.UserControls
                 }
             }
         }
-        #endregion
 
-        #region props
         public LotaryToolTip ToolTip
         {
             set
@@ -158,9 +153,7 @@ namespace StolotoParser_v2.UserControls
                 }
             }
         }
-        #endregion
 
-        #region actions
         private void NumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             var numericUpDown = (sender as NumericUpDown);
@@ -187,6 +180,5 @@ namespace StolotoParser_v2.UserControls
                 this.BtnLotaryClick.Invoke(this._toggle, e);
             }
         }
-        #endregion
     }
 }

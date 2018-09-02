@@ -35,6 +35,8 @@ namespace StolotoParser_v2
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            return;
+
             if (this.OnFormLoad != null)
             {
                 this.OnFormLoad(sender, e);
