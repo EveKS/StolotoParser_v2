@@ -22,6 +22,12 @@ namespace StolotoParser_v2
 
     public partial class MainForm : Form, IMainForm
     {
+        private int _step = 50;
+
+        private int _defaultValue = 50;
+
+        private int _maximum = 30000;
+
         public event EventHandler OnFormLoad;
 
         public event EventHandler NewElementEdded;

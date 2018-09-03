@@ -77,13 +77,10 @@
     <Compile Include="Services\IHtmlService.cs" />
     <Compile Include="Services\IJsonService.cs" />
     <Compile Include="Services\JsonService.cs" />
-    <Compile Include="UserControls\ILotaryInfoControl.cs" />
-    <Compile Include="UserControls\LotaryInfoControl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="UserControls\ElementButton.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UserControls\LotaryInfoControl.Designer.cs">
-      <DependentUpon>LotaryInfoControl.cs</DependentUpon>
-    </Compile>
+    <Compile Include="UserControls\IElementButton.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,9 +94,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UserControls\LotaryInfoControl.resx">
-      <DependentUpon>LotaryInfoControl.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
