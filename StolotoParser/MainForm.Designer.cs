@@ -48,12 +48,15 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.buttonContinue = new System.Windows.Forms.Button();
+            this.buttonStop = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // elementButton1
             // 
             this.elementButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton1.Element = null;
             this.elementButton1.Location = new System.Drawing.Point(483, 38);
             this.elementButton1.Name = "elementButton1";
             this.elementButton1.Size = new System.Drawing.Size(75, 35);
@@ -64,6 +67,7 @@
             // elementButton2
             // 
             this.elementButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton2.Element = null;
             this.elementButton2.Location = new System.Drawing.Point(564, 38);
             this.elementButton2.Name = "elementButton2";
             this.elementButton2.Size = new System.Drawing.Size(75, 35);
@@ -74,6 +78,7 @@
             // elementButton3
             // 
             this.elementButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton3.Element = null;
             this.elementButton3.Location = new System.Drawing.Point(645, 38);
             this.elementButton3.Name = "elementButton3";
             this.elementButton3.Size = new System.Drawing.Size(75, 35);
@@ -84,6 +89,7 @@
             // elementButton4
             // 
             this.elementButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton4.Element = null;
             this.elementButton4.Location = new System.Drawing.Point(645, 79);
             this.elementButton4.Name = "elementButton4";
             this.elementButton4.Size = new System.Drawing.Size(75, 35);
@@ -94,6 +100,7 @@
             // elementButton5
             // 
             this.elementButton5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton5.Element = null;
             this.elementButton5.Location = new System.Drawing.Point(564, 79);
             this.elementButton5.Name = "elementButton5";
             this.elementButton5.Size = new System.Drawing.Size(75, 35);
@@ -104,6 +111,7 @@
             // elementButton6
             // 
             this.elementButton6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton6.Element = null;
             this.elementButton6.Location = new System.Drawing.Point(483, 79);
             this.elementButton6.Name = "elementButton6";
             this.elementButton6.Size = new System.Drawing.Size(75, 35);
@@ -114,6 +122,7 @@
             // elementButton7
             // 
             this.elementButton7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton7.Element = null;
             this.elementButton7.Location = new System.Drawing.Point(645, 120);
             this.elementButton7.Name = "elementButton7";
             this.elementButton7.Size = new System.Drawing.Size(75, 35);
@@ -124,6 +133,7 @@
             // elementButton8
             // 
             this.elementButton8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton8.Element = null;
             this.elementButton8.Location = new System.Drawing.Point(564, 120);
             this.elementButton8.Name = "elementButton8";
             this.elementButton8.Size = new System.Drawing.Size(75, 35);
@@ -134,6 +144,7 @@
             // elementButton9
             // 
             this.elementButton9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton9.Element = null;
             this.elementButton9.Location = new System.Drawing.Point(483, 120);
             this.elementButton9.Name = "elementButton9";
             this.elementButton9.Size = new System.Drawing.Size(75, 35);
@@ -144,6 +155,7 @@
             // elementButton10
             // 
             this.elementButton10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton10.Element = null;
             this.elementButton10.Location = new System.Drawing.Point(645, 161);
             this.elementButton10.Name = "elementButton10";
             this.elementButton10.Size = new System.Drawing.Size(75, 35);
@@ -154,6 +166,7 @@
             // elementButton11
             // 
             this.elementButton11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton11.Element = null;
             this.elementButton11.Location = new System.Drawing.Point(564, 161);
             this.elementButton11.Name = "elementButton11";
             this.elementButton11.Size = new System.Drawing.Size(75, 35);
@@ -164,6 +177,7 @@
             // elementButton12
             // 
             this.elementButton12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton12.Element = null;
             this.elementButton12.Location = new System.Drawing.Point(483, 161);
             this.elementButton12.Name = "elementButton12";
             this.elementButton12.Size = new System.Drawing.Size(75, 35);
@@ -216,10 +230,12 @@
             this.textBox1.Location = new System.Drawing.Point(12, 12);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(708, 20);
-            this.textBox1.TabIndex = 16;
+            this.textBox1.TabIndex = 0;
             // 
             // progressBar1
             // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.Location = new System.Drawing.Point(12, 38);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(465, 20);
@@ -227,6 +243,8 @@
             // 
             // progressBar2
             // 
+            this.progressBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar2.Location = new System.Drawing.Point(12, 64);
             this.progressBar2.Name = "progressBar2";
             this.progressBar2.Size = new System.Drawing.Size(465, 20);
@@ -234,17 +252,44 @@
             // 
             // listBox1
             // 
+            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(12, 90);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(465, 173);
+            this.listBox1.Size = new System.Drawing.Size(465, 134);
             this.listBox1.TabIndex = 19;
+            // 
+            // buttonContinue
+            // 
+            this.buttonContinue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonContinue.Enabled = false;
+            this.buttonContinue.Location = new System.Drawing.Point(12, 230);
+            this.buttonContinue.Name = "buttonContinue";
+            this.buttonContinue.Size = new System.Drawing.Size(320, 35);
+            this.buttonContinue.TabIndex = 20;
+            this.buttonContinue.Text = "Старт";
+            this.buttonContinue.UseVisualStyleBackColor = true;
+            // 
+            // buttonStop
+            // 
+            this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonStop.Location = new System.Drawing.Point(337, 230);
+            this.buttonStop.Name = "buttonStop";
+            this.buttonStop.Size = new System.Drawing.Size(140, 35);
+            this.buttonStop.TabIndex = 21;
+            this.buttonStop.Text = "Стоп";
+            this.buttonStop.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 271);
+            this.Controls.Add(this.buttonStop);
+            this.Controls.Add(this.buttonContinue);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.progressBar2);
             this.Controls.Add(this.progressBar1);
@@ -296,6 +341,8 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ProgressBar progressBar2;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button buttonContinue;
+        private System.Windows.Forms.Button buttonStop;
     }
 }
 

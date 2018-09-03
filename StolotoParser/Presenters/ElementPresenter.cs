@@ -111,7 +111,7 @@ namespace StolotoParser_v2.Presenters
                 page++;
             }
 
-            this._elementButton.Canceled();
+            //this._elementButton.Canceled();
         }
     }
 }

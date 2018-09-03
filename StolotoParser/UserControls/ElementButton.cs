@@ -13,9 +13,9 @@ namespace StolotoParser_v2.UserControls
 
         public event EventHandler ElementButtonClick;
 
-        private bool _toggle;
-
         private Element _element;
+
+        public bool Loaded { get; set; }
 
         public ElementButton()
         {
@@ -28,16 +28,9 @@ namespace StolotoParser_v2.UserControls
 
         private void ElementButton_Click(object sender, EventArgs e)
         {
-            this._toggle ^= true;
-
-            if (this._toggle)
-            {
-                this.Text = "Started";
-            }
-
             if (this.ElementButtonClick != null)
             {
-                this.ElementButtonClick.Invoke(this._toggle, e);
+                this.ElementButtonClick.Invoke(this as IElementButton, e);
             }
         }
 
@@ -53,43 +46,14 @@ namespace StolotoParser_v2.UserControls
                 {
                     this._element = value;
 
-                    this.Text = value.BtnName;
+                    if (value != null)
+                    {
+                        this.Text = value.BtnName;
 
-                    this._toolTip.SetToolTip(this, value.BtnName);
+                        this._toolTip.SetToolTip(this, value.BtnName);
+                    }
                 }));
             }
-        }
-
-        public void Continue()
-        {
-            this.InvoceAction(new Action(() =>
-            {
-                this._toggle = false;
-
-                this.Text = "Paused";
-            }));
-        }
-
-        public void Pause()
-        {
-            this.InvoceAction(new Action(() =>
-            {
-                this._toggle = false;
-
-                this.Text = "Paused";
-            }));
-        }
-
-        public void Canceled()
-        {
-            this.InvoceAction(new Action(() =>
-                {
-                    this._toggle = false;
-
-                    this.Text = this._element.BtnName;
-
-                    this.Enabled = true;
-                }));
         }
 
         public LotaryToolTip ToolTip
