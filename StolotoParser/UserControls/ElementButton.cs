@@ -30,7 +30,10 @@ namespace StolotoParser_v2.UserControls
         {
             this._toggle ^= true;
 
-            this.Enabled = !this._toggle;
+            if (this._toggle)
+            {
+                this.Text = "Started";
+            }
 
             if (this.ElementButtonClick != null)
             {
@@ -50,6 +53,8 @@ namespace StolotoParser_v2.UserControls
                 {
                     this._element = value;
 
+                    this.Text = value.BtnName;
+
                     this._toolTip.SetToolTip(this, value.BtnName);
                 }));
             }
@@ -61,8 +66,6 @@ namespace StolotoParser_v2.UserControls
             {
                 this._toggle = false;
 
-                this.Enabled = true;
-
                 this.Text = "Paused";
             }));
         }
@@ -73,8 +76,6 @@ namespace StolotoParser_v2.UserControls
             {
                 this._toggle = false;
 
-                this.Enabled = true;
-
                 this.Text = "Paused";
             }));
         }
@@ -84,6 +85,8 @@ namespace StolotoParser_v2.UserControls
             this.InvoceAction(new Action(() =>
                 {
                     this._toggle = false;
+
+                    this.Text = this._element.BtnName;
 
                     this.Enabled = true;
                 }));

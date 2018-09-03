@@ -12,7 +12,10 @@ namespace StolotoParser_v2.Services
         {
             try
             {
-                return JsonConvert.DeserializeObject<T>(json);
+                return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                });
             }
             catch
             {

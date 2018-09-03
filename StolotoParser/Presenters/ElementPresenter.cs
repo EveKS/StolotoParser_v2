@@ -20,7 +20,7 @@ namespace StolotoParser_v2.Presenters
 
         private readonly string _pathFormat;
 
-        private readonly ILotaryInfoControl _lotaryInfoControl;
+        private readonly IElementButton _elementButton;
 
         private readonly Element _element;
 
@@ -32,14 +32,14 @@ namespace StolotoParser_v2.Presenters
 
         private readonly IFileWriteService _fileWriteService;
 
-        public ElementPresenter(ILotaryInfoControl lotaryInfoControl, IJsonService jsonService, IHtmlService htmlService,
+        public ElementPresenter(IElementButton elementButton, IJsonService jsonService, IHtmlService htmlService,
             IHtmlParser htmlParser, IFileWriteService fileWriteService, string pathFormat)
         {
             this._pathFormat = pathFormat;
 
-            this._lotaryInfoControl = lotaryInfoControl;
+            this._elementButton = elementButton;
 
-            this._element = lotaryInfoControl.Element;
+            this._element = elementButton.Element;
 
             this._jsonService = jsonService;
 
@@ -49,10 +49,10 @@ namespace StolotoParser_v2.Presenters
 
             this._fileWriteService = fileWriteService;
 
-            this._lotaryInfoControl.BtnLotaryClick += this._lotaryInfoControl_BtnLotaryClick;
+            this._elementButton.ElementButtonClick += _elementButton_ElementButtonClick;
         }
 
-        private void _lotaryInfoControl_BtnLotaryClick(object sender, EventArgs e)
+        private void _elementButton_ElementButtonClick(object sender, EventArgs e)
         {
             this._get = (bool)sender;
 
@@ -86,24 +86,32 @@ namespace StolotoParser_v2.Presenters
             {
                 total = total - 50 > 50 ? total - 50 : 0;
 
+                if (this._cancellationTokenSource.IsCancellationRequested) break;
+
                 var json = this._htmlService.GetStringContent(string.Format(this._pathFormat, this._element.PathName, page));
+
+                if (this._cancellationTokenSource.IsCancellationRequested) break;
 
                 var postResulModel = this._jsonService.JsonConvertDeserializeObject<PostResulModel>(json);
 
+                if (this._cancellationTokenSource.IsCancellationRequested) break;
+
                 var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data);
+
+                if (this._cancellationTokenSource.IsCancellationRequested) break;
 
                 this._fileWriteService.WriteStolotoResult(stolotoParseResults, this._element);
 
-                this._lotaryInfoControl.ToolTip = new LotaryToolTip() { Status = postResulModel.Status, Page = page };
+                if (this._cancellationTokenSource.IsCancellationRequested) break;
 
-                this._lotaryInfoControl.ProcessInfo = new ProcessInfo() { Loaded = maximum - total, Total = maximum };
+                this._elementButton.ToolTip = new LotaryToolTip() { Status = postResulModel.Status, Page = page };
 
                 if (postResulModel.Stop) break;
 
                 page++;
             }
 
-            this._lotaryInfoControl.Canceled = true;
+            this._elementButton.Canceled();
         }
     }
 }

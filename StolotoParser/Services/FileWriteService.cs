@@ -11,7 +11,7 @@ namespace StolotoParser_v2.Services
     {
         void IFileWriteService.WriteStolotoResult(List<StolotoParseResult> stolotoParseResults, Element element)
         {
-            var format = "{0}_{1}";
+            var format = "{0} _ {1}";
 
             var filePath = Path.Combine(Application.StartupPath, element.FileName);
 
@@ -25,7 +25,7 @@ namespace StolotoParser_v2.Services
             {
                 foreach (var stolotoParseResult in stolotoParseResults)
                 {
-                    streamWriter.WriteLine(string.Format(format, stolotoParseResult.Draw, string.Join(" ", stolotoParseResult.Numbers)));
+                    streamWriter.WriteLine(string.Format(format, stolotoParseResult.Draw, string.Join(" ", stolotoParseResult.Numbers.Select(val => val.ToString("d2")))));
                 }
             }
         }

@@ -41,9 +41,9 @@ namespace StolotoParser_v2.Presenters
 
         private void _mainForm_NewElementEdded(object sender, EventArgs e)
         {
-            if(sender is ILotaryInfoControl)
+            if(sender is IElementButton)
             {
-                new ElementPresenter(sender as ILotaryInfoControl, this._jsonService, this._htmlService,
+                new ElementPresenter(sender as IElementButton, this._jsonService, this._htmlService,
                     this._htmlParser, this._fileWriteService, this._appSettings.Format);
             }
         }
