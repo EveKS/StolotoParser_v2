@@ -48,7 +48,7 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.buttonContinue = new System.Windows.Forms.Button();
+            this.buttonStart = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -261,21 +261,22 @@
             this.listBox1.Size = new System.Drawing.Size(465, 134);
             this.listBox1.TabIndex = 19;
             // 
-            // buttonContinue
+            // buttonStart
             // 
-            this.buttonContinue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonContinue.Enabled = false;
-            this.buttonContinue.Location = new System.Drawing.Point(12, 230);
-            this.buttonContinue.Name = "buttonContinue";
-            this.buttonContinue.Size = new System.Drawing.Size(320, 35);
-            this.buttonContinue.TabIndex = 20;
-            this.buttonContinue.Text = "Старт";
-            this.buttonContinue.UseVisualStyleBackColor = true;
+            this.buttonStart.Enabled = false;
+            this.buttonStart.Location = new System.Drawing.Point(12, 230);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(320, 35);
+            this.buttonStart.TabIndex = 20;
+            this.buttonStart.Text = "Старт";
+            this.buttonStart.UseVisualStyleBackColor = true;
             // 
             // buttonStop
             // 
             this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonStop.Enabled = false;
             this.buttonStop.Location = new System.Drawing.Point(337, 230);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(140, 35);
@@ -289,7 +290,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 271);
             this.Controls.Add(this.buttonStop);
-            this.Controls.Add(this.buttonContinue);
+            this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.progressBar2);
             this.Controls.Add(this.progressBar1);
@@ -341,7 +342,7 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ProgressBar progressBar2;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button buttonContinue;
+        private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Button buttonStop;
     }
 }

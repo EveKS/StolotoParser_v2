@@ -2,6 +2,7 @@
 using StolotoParser_v2.Services;
 using StolotoParser_v2.UserControls;
 using System;
+using System.Linq;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,12 @@ namespace StolotoParser_v2.Presenters
 {
     public class MainPresenter
     {
+        private int _startDraw = -1;
+
+        private int _loadedPage = -1;
+
+        private int _drawInPage = 50;
+
         private Task _task;
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -48,7 +55,18 @@ namespace StolotoParser_v2.Presenters
 
             this._mainForm.NewElementEdded += new EventHandler(this._mainForm_NewElementEdded);
 
-            this._mainForm.StartButtonClick += _mainForm_StartButtonClick;
+            this._mainForm.StartButtonClick += this._mainForm_StartButtonClick;
+
+            this._mainForm.StopButtonClick += this._mainForm_StopButtonClick;
+        }
+
+        private void _mainForm_StopButtonClick(object sender, EventArgs e)
+        {
+            this._loadedPage = -1;
+
+            this._startDraw = -1;
+
+            this._cancellationTokenSource.Cancel();
         }
 
         private void _mainForm_StartButtonClick(object sender, EventArgs e)
@@ -57,7 +75,6 @@ namespace StolotoParser_v2.Presenters
 
             this._selectedElement = this._selectedButton.Element;
 
-
             this._cancellationTokenSource = new CancellationTokenSource();
 
             this._task = Task.Factory.StartNew(() => this.TaskBody(), this._cancellationTokenSource.Token);
@@ -65,7 +82,7 @@ namespace StolotoParser_v2.Presenters
 
         private void _mainForm_NewElementEdded(object sender, EventArgs e)
         {
-            if(sender is IElementButton)
+            if (sender is IElementButton)
             {
                 (sender as IElementButton).ElementButtonClick += MainPresenter_ElementButtonClick;
             }
@@ -93,13 +110,11 @@ namespace StolotoParser_v2.Presenters
 
         private void TaskBody()
         {
-            var maximum = 0;
+            var newFormat = "";
 
             var total = this._selectedElement.TotalCount.HasValue && this._selectedElement.TotalCount.Value > 0
                 ? this._selectedElement.TotalCount.Value
-                : 50;
-
-            maximum = total;
+                : this._drawInPage;
 
             var page = 1;
 
@@ -107,11 +122,22 @@ namespace StolotoParser_v2.Presenters
 
             while (total > 0)
             {
-                total = total - 50 > 50 ? total - 50 : 0;
+                if (this._loadedPage == -1)
+                {
+                    this._loadedPage = 1;
+
+                    newFormat = string.Format(this._appSettings.Format, this._selectedElement.PathName, 1);
+                }
+                else
+                {
+                    newFormat = string.Format(this._appSettings.ContinueFormat, this._selectedElement.PathName, 1, this._startDraw);
+                }
+
+                total = total - this._drawInPage > this._drawInPage ? total - this._drawInPage : 0;
 
                 if (this._cancellationTokenSource.IsCancellationRequested) return;
 
-                var json = this._htmlService.GetStringContent(string.Format(this._appSettings.Format, this._selectedElement.PathName, page));
+                var json = this._htmlService.GetStringContent(newFormat);
 
                 if (this._cancellationTokenSource.IsCancellationRequested) return;
 
@@ -125,18 +151,22 @@ namespace StolotoParser_v2.Presenters
 
                 this._fileWriteService.WriteStolotoResult(stolotoParseResults, this._selectedElement);
 
-                if (this._cancellationTokenSource.IsCancellationRequested) return;
-
                 this._selectedButton.ToolTip = new LotaryToolTip() { Status = postResulModel.Status, Page = page };
 
                 if (postResulModel.Stop) break;
 
+                this._startDraw = stolotoParseResults.Min(val => val.Draw);
+
                 page++;
+
+                this._loadedPage++;
             }
 
-            this._selectedButton.Loaded = true;
+            this._loadedPage = -1;
 
-            this._mainForm.SetLoadedStatus();
+            this._startDraw = -1;
+
+            this._mainForm.SetLoaded();
         }
     }
 }

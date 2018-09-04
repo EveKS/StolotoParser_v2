@@ -6,7 +6,6 @@ namespace StolotoParser_v2.UserControls
     public interface IElementButton
     {
         Element Element { get; set; }
-        bool Loaded { get; set; }
         LotaryToolTip ToolTip { set; }
 
         event EventHandler ElementButtonClick;

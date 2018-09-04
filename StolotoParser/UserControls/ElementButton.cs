@@ -15,8 +15,6 @@ namespace StolotoParser_v2.UserControls
 
         private Element _element;
 
-        public bool Loaded { get; set; }
-
         public ElementButton()
         {
             this._toolTip = new ToolTip();

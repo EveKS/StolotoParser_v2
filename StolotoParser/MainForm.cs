@@ -19,53 +19,26 @@ namespace StolotoParser_v2
 
         event EventHandler StartButtonClick;
 
-        event EventHandler PauseButtonClick;
-
-        event EventHandler ContinueButtonClick;
-
         event EventHandler NewElementEdded;
 
         void SetButtons(Element[] elements);
 
-        void SetLoadedStatus();
+        void SetLoaded();
 
         void UpdateSelectedStatuses(Element element, string statusText);
     }
 
     public partial class MainForm : Form, IMainForm
     {
-        private Status _status;
-
         private int _step = 50;
 
         private int _defaultValue = 50;
 
         private int _maximum = 30000;
 
-        private Status _buttonStartStatus
-        {
-            get
-            {
-                return this._status;
-            }
-            set
-            {
-                this.InvoceAction(new Action(() =>
-                {
-                    this.buttonContinue.Text = value.ToString();
-
-                    this._status = value;
-                }));
-            }
-        }
-
         public event EventHandler OnFormLoad;
 
         public event EventHandler StartButtonClick;
-
-        public event EventHandler PauseButtonClick;
-
-        public event EventHandler ContinueButtonClick;
 
         public event EventHandler StopButtonClick;
 
@@ -77,8 +50,6 @@ namespace StolotoParser_v2
         {
             InitializeComponent();
 
-            this._buttonStartStatus = Status.Старт;
-
             this.numericUpDown1.Maximum = this._maximum;
 
             this.numericUpDown1.Increment = this._step;
@@ -89,67 +60,58 @@ namespace StolotoParser_v2
 
             this.numericUpDown1.ValueChanged += this.NumericUpDown1_ValueChanged;
 
-            this.buttonContinue.Click += ButtonContinue_Click;
-
             this.buttonStop.Click += ButtonStop_Click;
+
+            this.buttonStart.Click += ButtonStart_Click;
+        }
+
+        private void ButtonStart_Click(object sender, EventArgs e)
+        {
+            this.InvoceAction(new Action(() =>
+            {
+                (sender as Button).Enabled = false;
+
+                buttonStop.Enabled = true;
+
+                var buttons = this.Controls.OfType<IElementButton>()
+                    .OrderBy(bt => (bt as Button).TabIndex);
+
+                foreach (var btn in buttons)
+                {
+                    if (btn == this._selectedButton) continue;
+
+                    (btn as Button).Enabled = false;
+                }
+
+                if (this.StartButtonClick != null)
+                {
+                    this.StartButtonClick.Invoke(this._selectedButton, EventArgs.Empty);
+                }
+            }));
         }
 
         private void ButtonStop_Click(object sender, EventArgs e)
         {
-            this.buttonContinue.Text = Status.Старт.ToString();
+            this.InvoceAction(new Action(() =>
+            {
+                (sender as Button).Enabled = false;
+
+                buttonStart.Enabled = true;
+
+                var buttons = this.Controls.OfType<IElementButton>()
+                    .OrderBy(bt => (bt as Button).TabIndex);
+
+                foreach (var btn in buttons)
+                {
+                    if (string.IsNullOrWhiteSpace((btn as Button).Text)) continue;
+
+                    (btn as Button).Enabled = true;
+                }
+            }));
 
             if (this.StopButtonClick != null)
             {
                 this.StopButtonClick.Invoke(null, EventArgs.Empty);
-            }
-        }
-
-        private void ButtonContinue_Click(object sender, EventArgs e)
-        {
-            if (this._selectedButton.Loaded) this._buttonStartStatus = Status.Старт;
-
-            switch (this._buttonStartStatus)
-            {
-                case Status.Старт:
-                    this._buttonStartStatus = Status.Приостановить;
-
-                    this._selectedButton.Loaded = false;
-
-                    if (this.StartButtonClick != null)
-                    {
-                        this.StartButtonClick.Invoke(this._selectedButton, EventArgs.Empty);
-                    }
-                    break;
-                case Status.Приостановить:
-                    if (this._selectedButton.Loaded)
-                    {
-                        this._buttonStartStatus = Status.Старт;
-
-                        if (this.StopButtonClick != null)
-                        {
-                            this.StopButtonClick.Invoke(null, EventArgs.Empty);
-                        }
-                    }
-                    else
-                    {
-                        this._buttonStartStatus = Status.Продолжить;
-
-                        if (this.PauseButtonClick != null)
-                        {
-                            this.PauseButtonClick.Invoke(null, EventArgs.Empty);
-                        }
-                    }
-                    break;
-                case Status.Продолжить:
-                    this._buttonStartStatus = Status.Приостановить;
-
-                    if (this.ContinueButtonClick != null)
-                    {
-                        this.ContinueButtonClick.Invoke(null, EventArgs.Empty);
-                    }
-                    break;
-                default:
-                    break;
             }
         }
 
@@ -171,16 +133,31 @@ namespace StolotoParser_v2
             }
         }
 
-        public void SetLoadedStatus()
+        public void SetLoaded()
         {
-            this._buttonStartStatus = Status.Старт;
+            this.InvoceAction(new Action(() =>
+            {
+                this.buttonStart.Enabled = true;
+
+                this.buttonStop.Enabled = false;
+
+                var buttons = this.Controls.OfType<IElementButton>()
+                    .OrderBy(bt => (bt as Button).TabIndex);
+
+                foreach (var btn in buttons)
+                {
+                    if (string.IsNullOrWhiteSpace((btn as Button).Text)) continue;
+
+                    (btn as Button).Enabled = true;
+                }
+            }));
         }
 
         public void UpdateSelectedStatuses(Element element, string statusText)
         {
             this.InvoceAction(new Action(() =>
             {
-                this.buttonContinue.Enabled = true;
+                this.buttonStart.Enabled = true;
 
                 var total = element.TotalCount.HasValue ? (int)element.TotalCount : 50;
 

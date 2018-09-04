@@ -61,13 +61,11 @@
     </Compile>
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\Element.cs" />
-    <Compile Include="Models\Status.cs" />
     <Compile Include="Services\IFileWriteService.cs" />
     <Compile Include="Models\PostResulModel.cs" />
     <Compile Include="Models\LotaryToolTip.cs" />
     <Compile Include="Models\ProcessInfo.cs" />
     <Compile Include="Models\StolotoParseResult.cs" />
-    <Compile Include="Presenters\ElementPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
