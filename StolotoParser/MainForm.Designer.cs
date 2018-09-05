@@ -38,8 +38,8 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.buttonStart = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.fileDataCurrrent = new System.Windows.Forms.Label();
+            this.fileDataAll = new System.Windows.Forms.Label();
             this.labelLastDraw = new System.Windows.Forms.Label();
             this.getLastDraw = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -91,7 +91,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(710, 256);
+            this.label3.Location = new System.Drawing.Point(658, 256);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label3.Size = new System.Drawing.Size(13, 13);
@@ -159,40 +159,34 @@
             this.buttonStop.Text = "Стоп";
             this.buttonStop.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // fileDataCurrrent
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 95);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(62, 13);
-            this.label4.TabIndex = 22;
-            this.label4.Text = "Загружено";
+            this.fileDataCurrrent.AutoSize = true;
+            this.fileDataCurrrent.Location = new System.Drawing.Point(12, 95);
+            this.fileDataCurrrent.Name = "fileDataCurrrent";
+            this.fileDataCurrrent.Size = new System.Drawing.Size(0, 13);
+            this.fileDataCurrrent.TabIndex = 22;
             // 
-            // label5
+            // fileDataAll
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(120, 95);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(62, 13);
-            this.label5.TabIndex = 23;
-            this.label5.Text = "Загружено";
+            this.fileDataAll.AutoSize = true;
+            this.fileDataAll.Location = new System.Drawing.Point(120, 95);
+            this.fileDataAll.Name = "fileDataAll";
+            this.fileDataAll.Size = new System.Drawing.Size(0, 13);
+            this.fileDataAll.TabIndex = 23;
             // 
             // labelLastDraw
             // 
-            this.labelLastDraw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelLastDraw.AutoSize = true;
-            this.labelLastDraw.Location = new System.Drawing.Point(464, 95);
+            this.labelLastDraw.Location = new System.Drawing.Point(415, 95);
             this.labelLastDraw.Name = "labelLastDraw";
-            this.labelLastDraw.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.labelLastDraw.Size = new System.Drawing.Size(13, 13);
+            this.labelLastDraw.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.labelLastDraw.Size = new System.Drawing.Size(0, 13);
             this.labelLastDraw.TabIndex = 27;
-            this.labelLastDraw.Text = "0";
+            this.labelLastDraw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // getLastDraw
             // 
-            this.getLastDraw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.getLastDraw.Enabled = false;
             this.getLastDraw.Location = new System.Drawing.Point(277, 88);
             this.getLastDraw.Name = "getLastDraw";
@@ -363,8 +357,8 @@
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.getLastDraw);
             this.Controls.Add(this.labelLastDraw);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.fileDataAll);
+            this.Controls.Add(this.fileDataCurrrent);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.listBox1);
@@ -420,8 +414,8 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Button buttonStop;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label fileDataCurrrent;
+        private System.Windows.Forms.Label fileDataAll;
         private System.Windows.Forms.Label labelLastDraw;
         private System.Windows.Forms.Button getLastDraw;
         private System.Windows.Forms.CheckBox checkBox1;

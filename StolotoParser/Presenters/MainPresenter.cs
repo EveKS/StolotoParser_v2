@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace StolotoParser_v2.Presenters
 {
@@ -23,6 +24,8 @@ namespace StolotoParser_v2.Presenters
         private CancellationTokenSource _cancellationTokenSource;
 
         private AppSettings _appSettings;
+
+        private List<FilesData> _filesData;
 
         private IElementButton _selectedButton;
 
@@ -110,11 +113,15 @@ namespace StolotoParser_v2.Presenters
         private void MainPresenter_ElementButtonClick(object sender, EventArgs e)
         {
             this._mainForm.UpdateSelectedStatuses((sender as IElementButton).Element, string.Format(this._appSettings.Format, (sender as IElementButton).Element.PathName, 1));
+
+            this._mainForm.SetDatas = this._filesData.FirstOrDefault(val => val.DataName == (sender as IElementButton).Element.BtnName);
         }
 
         private void _mainForm_OnLoad(object sender, EventArgs e)
         {
             this.GetSettings();
+
+            this.GetDatas();
 
             this._mainForm.SetButtons(this._appSettings.Elements);
         }
@@ -124,6 +131,55 @@ namespace StolotoParser_v2.Presenters
             using (StreamReader sr = new StreamReader(Path.Combine(Application.StartupPath, "appsettings.json")))
             {
                 this._appSettings = this._jsonService.JsonConvertDeserializeObject<AppSettings>(sr.ReadToEnd());
+            }
+        }
+
+        private void GetDatas()
+        {
+            this._filesData = new List<FilesData>(this._appSettings.Elements.Length);
+
+            foreach (var element in this._appSettings.Elements)
+            {
+                FilesData filesData = null;
+
+                if (File.Exists(Path.Combine(Application.StartupPath, element.FileName)))
+                {
+                    filesData = new FilesData() { DataName = element.BtnName };
+
+                    using (StreamReader sr = new StreamReader(Path.Combine(Application.StartupPath, element.FileName)))
+                    {
+                        string firstRow = sr.ReadLine();
+
+                        if (!string.IsNullOrEmpty(firstRow))
+                        {
+                            var datas = firstRow.Split('_');
+
+                            filesData.LastDrawCurrent = Convert.ToInt32(datas[0].Trim());
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(element.FileAllName) && File.Exists(Path.Combine(Application.StartupPath, element.FileAllName)))
+                {
+                    if (filesData == null) filesData = new FilesData() { DataName = element.BtnName };
+
+                    using (StreamReader sr = new StreamReader(Path.Combine(Application.StartupPath, element.FileAllName)))
+                    {
+                        string firstRow = sr.ReadLine();
+
+                        if (!string.IsNullOrEmpty(firstRow))
+                        {
+                            var datas = firstRow.Split('_');
+
+                            filesData.LastDrawFull = Convert.ToInt32(datas[0].Trim());
+                        }
+                    }
+                }
+
+                if (filesData != null)
+                {
+                    this._filesData.Add(filesData);
+                }
             }
         }
 

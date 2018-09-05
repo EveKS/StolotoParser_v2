@@ -13,6 +13,8 @@ namespace StolotoParser_v2
 {
     public interface IMainForm
     {
+        FilesData SetDatas { set; }
+
         int SetLastDraw { set; }
 
         event EventHandler OnFormLoad;
@@ -183,6 +185,28 @@ namespace StolotoParser_v2
             }));
         }
 
+        public FilesData SetDatas
+        {
+            set
+            {
+                this.InvoceAction(() => 
+                {
+                    if (value != null)
+                    {
+                        if (value.LastDrawCurrent != 0)
+                        {
+                            this.fileDataCurrrent.Text = Convert.ToString(value.LastDrawCurrent);
+                        }
+
+                        if (value.LastDrawFull != 0)
+                        {
+                            this.fileDataAll.Text = Convert.ToString(value.LastDrawFull);
+                        }
+                    }
+                });
+            }
+        }
+
         public void UpdateSelectedStatuses(Element element, string statusText)
         {
             this.InvoceAction(new Action(() =>
@@ -230,6 +254,10 @@ namespace StolotoParser_v2
         {
             this.InvoceAction(new Action(() =>
             {
+                this.fileDataCurrrent.Text = string.Empty;
+
+                this.fileDataAll.Text = string.Empty;
+
                 this.getLastDraw.Enabled = true;
 
                 var btn = sender as IElementButton;
