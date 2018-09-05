@@ -58,6 +58,25 @@ namespace StolotoParser_v2.Presenters
             this._mainForm.StartButtonClick += this._mainForm_StartButtonClick;
 
             this._mainForm.StopButtonClick += this._mainForm_StopButtonClick;
+
+            this._mainForm.GetLastDrawClick += _mainForm_GetLastDrawClick;
+        }
+
+        private void _mainForm_GetLastDrawClick(object sender, EventArgs e)
+        {
+            this._selectedButton = sender as IElementButton;
+
+            this._selectedElement = this._selectedButton.Element;
+
+            this._cancellationTokenSource = new CancellationTokenSource();
+
+            this._task = Task.Factory.StartNew(() => this.GetDraw(), this._cancellationTokenSource.Token)
+                .ContinueWith(task => 
+                {
+                    this._mainForm.SetLastDraw = task.Result;
+
+                    this._mainForm.SetLoaded();
+                });
         }
 
         private void _mainForm_StopButtonClick(object sender, EventArgs e)
@@ -167,6 +186,17 @@ namespace StolotoParser_v2.Presenters
             this._startDraw = -1;
 
             this._mainForm.SetLoaded();
+        }
+
+        private int GetDraw()
+        {
+            var json = this._htmlService.GetStringContent(string.Format(this._appSettings.Format, this._selectedElement.PathName, 1));
+
+            var postResulModel = this._jsonService.JsonConvertDeserializeObject<PostResulModel>(json);
+
+            var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data);
+
+            return stolotoParseResults.Max(val => val.Draw);
         }
     }
 }

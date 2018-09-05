@@ -13,6 +13,8 @@ namespace StolotoParser_v2
 {
     public interface IMainForm
     {
+        int SetLastDraw { set; }
+
         event EventHandler OnFormLoad;
 
         event EventHandler StopButtonClick;
@@ -20,6 +22,8 @@ namespace StolotoParser_v2
         event EventHandler StartButtonClick;
 
         event EventHandler NewElementEdded;
+
+        event EventHandler GetLastDrawClick;
 
         void SetButtons(Element[] elements);
 
@@ -44,6 +48,8 @@ namespace StolotoParser_v2
 
         public event EventHandler NewElementEdded;
 
+        public event EventHandler GetLastDrawClick;
+
         private IElementButton _selectedButton;
 
         public MainForm()
@@ -63,6 +69,28 @@ namespace StolotoParser_v2
             this.buttonStop.Click += ButtonStop_Click;
 
             this.buttonStart.Click += ButtonStart_Click;
+
+            this.getLastDraw.Click += GetLastDraw_Click;
+        }
+
+        private void GetLastDraw_Click(object sender, EventArgs e)
+        {
+            this.buttonStart.Enabled = false;
+
+            this.buttonStop.Enabled = false;
+
+            var buttons = this.Controls.OfType<IElementButton>()
+                .OrderBy(bt => (bt as Button).TabIndex);
+
+            foreach (var btn in buttons)
+            {
+                (btn as Button).Enabled = false;
+            }
+
+            if (this.GetLastDrawClick != null)
+            {
+                this.GetLastDrawClick.Invoke(this._selectedButton, EventArgs.Empty);
+            }
         }
 
         private void ButtonStart_Click(object sender, EventArgs e)
@@ -133,6 +161,8 @@ namespace StolotoParser_v2
             }
         }
 
+        public int SetLastDraw { set { this.InvoceAction(() => { this.labelLastDraw.Text = Convert.ToString(value); }); } }
+
         public void SetLoaded()
         {
             this.InvoceAction(new Action(() =>
@@ -200,9 +230,13 @@ namespace StolotoParser_v2
         {
             this.InvoceAction(new Action(() =>
             {
+                this.getLastDraw.Enabled = true;
+
                 var btn = sender as IElementButton;
 
                 this._selectedButton = btn;
+
+                this.checkBox2.Enabled = !string.IsNullOrEmpty(btn.Element.FileAllName);
             }));
         }
 

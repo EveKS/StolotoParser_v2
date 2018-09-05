@@ -28,18 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.elementButton1 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton2 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton3 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton4 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton5 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton6 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton7 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton8 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton9 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton10 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton11 = new StolotoParser_v2.UserControls.ElementButton();
-            this.elementButton12 = new StolotoParser_v2.UserControls.ElementButton();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -50,146 +38,32 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.buttonStart = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.labelLastDraw = new System.Windows.Forms.Label();
+            this.getLastDraw = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.elementButton10 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton11 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton12 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton7 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton8 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton9 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton4 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton5 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton6 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton3 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton2 = new StolotoParser_v2.UserControls.ElementButton();
+            this.elementButton1 = new StolotoParser_v2.UserControls.ElementButton();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // elementButton1
-            // 
-            this.elementButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton1.Element = null;
-            this.elementButton1.Location = new System.Drawing.Point(483, 38);
-            this.elementButton1.Name = "elementButton1";
-            this.elementButton1.Size = new System.Drawing.Size(75, 35);
-            this.elementButton1.TabIndex = 0;
-            this.elementButton1.Text = " ";
-            this.elementButton1.UseVisualStyleBackColor = true;
-            // 
-            // elementButton2
-            // 
-            this.elementButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton2.Element = null;
-            this.elementButton2.Location = new System.Drawing.Point(564, 38);
-            this.elementButton2.Name = "elementButton2";
-            this.elementButton2.Size = new System.Drawing.Size(75, 35);
-            this.elementButton2.TabIndex = 1;
-            this.elementButton2.Text = " ";
-            this.elementButton2.UseVisualStyleBackColor = true;
-            // 
-            // elementButton3
-            // 
-            this.elementButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton3.Element = null;
-            this.elementButton3.Location = new System.Drawing.Point(645, 38);
-            this.elementButton3.Name = "elementButton3";
-            this.elementButton3.Size = new System.Drawing.Size(75, 35);
-            this.elementButton3.TabIndex = 2;
-            this.elementButton3.Text = " ";
-            this.elementButton3.UseVisualStyleBackColor = true;
-            // 
-            // elementButton4
-            // 
-            this.elementButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton4.Element = null;
-            this.elementButton4.Location = new System.Drawing.Point(645, 79);
-            this.elementButton4.Name = "elementButton4";
-            this.elementButton4.Size = new System.Drawing.Size(75, 35);
-            this.elementButton4.TabIndex = 5;
-            this.elementButton4.Text = " ";
-            this.elementButton4.UseVisualStyleBackColor = true;
-            // 
-            // elementButton5
-            // 
-            this.elementButton5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton5.Element = null;
-            this.elementButton5.Location = new System.Drawing.Point(564, 79);
-            this.elementButton5.Name = "elementButton5";
-            this.elementButton5.Size = new System.Drawing.Size(75, 35);
-            this.elementButton5.TabIndex = 4;
-            this.elementButton5.Text = " ";
-            this.elementButton5.UseVisualStyleBackColor = true;
-            // 
-            // elementButton6
-            // 
-            this.elementButton6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton6.Element = null;
-            this.elementButton6.Location = new System.Drawing.Point(483, 79);
-            this.elementButton6.Name = "elementButton6";
-            this.elementButton6.Size = new System.Drawing.Size(75, 35);
-            this.elementButton6.TabIndex = 3;
-            this.elementButton6.Text = " ";
-            this.elementButton6.UseVisualStyleBackColor = true;
-            // 
-            // elementButton7
-            // 
-            this.elementButton7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton7.Element = null;
-            this.elementButton7.Location = new System.Drawing.Point(645, 120);
-            this.elementButton7.Name = "elementButton7";
-            this.elementButton7.Size = new System.Drawing.Size(75, 35);
-            this.elementButton7.TabIndex = 8;
-            this.elementButton7.Text = " ";
-            this.elementButton7.UseVisualStyleBackColor = true;
-            // 
-            // elementButton8
-            // 
-            this.elementButton8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton8.Element = null;
-            this.elementButton8.Location = new System.Drawing.Point(564, 120);
-            this.elementButton8.Name = "elementButton8";
-            this.elementButton8.Size = new System.Drawing.Size(75, 35);
-            this.elementButton8.TabIndex = 7;
-            this.elementButton8.Text = " ";
-            this.elementButton8.UseVisualStyleBackColor = true;
-            // 
-            // elementButton9
-            // 
-            this.elementButton9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton9.Element = null;
-            this.elementButton9.Location = new System.Drawing.Point(483, 120);
-            this.elementButton9.Name = "elementButton9";
-            this.elementButton9.Size = new System.Drawing.Size(75, 35);
-            this.elementButton9.TabIndex = 6;
-            this.elementButton9.Text = " ";
-            this.elementButton9.UseVisualStyleBackColor = true;
-            // 
-            // elementButton10
-            // 
-            this.elementButton10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton10.Element = null;
-            this.elementButton10.Location = new System.Drawing.Point(645, 161);
-            this.elementButton10.Name = "elementButton10";
-            this.elementButton10.Size = new System.Drawing.Size(75, 35);
-            this.elementButton10.TabIndex = 11;
-            this.elementButton10.Text = " ";
-            this.elementButton10.UseVisualStyleBackColor = true;
-            // 
-            // elementButton11
-            // 
-            this.elementButton11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton11.Element = null;
-            this.elementButton11.Location = new System.Drawing.Point(564, 161);
-            this.elementButton11.Name = "elementButton11";
-            this.elementButton11.Size = new System.Drawing.Size(75, 35);
-            this.elementButton11.TabIndex = 10;
-            this.elementButton11.Text = " ";
-            this.elementButton11.UseVisualStyleBackColor = true;
-            // 
-            // elementButton12
-            // 
-            this.elementButton12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementButton12.Element = null;
-            this.elementButton12.Location = new System.Drawing.Point(483, 161);
-            this.elementButton12.Name = "elementButton12";
-            this.elementButton12.Size = new System.Drawing.Size(75, 35);
-            this.elementButton12.TabIndex = 9;
-            this.elementButton12.Text = " ";
-            this.elementButton12.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(499, 215);
+            this.label1.Location = new System.Drawing.Point(512, 238);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 12;
@@ -199,29 +73,30 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(642, 215);
+            this.label2.Location = new System.Drawing.Point(655, 238);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 13;
-            this.label2.Text = "Загружено";
+            this.label2.Text = "Загружено:";
             // 
             // numericUpDown1
             // 
             this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.Location = new System.Drawing.Point(483, 243);
+            this.numericUpDown1.Location = new System.Drawing.Point(483, 254);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(115, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(117, 20);
             this.numericUpDown1.TabIndex = 14;
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(642, 245);
+            this.label3.Location = new System.Drawing.Point(710, 256);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label3.Size = new System.Drawing.Size(13, 13);
             this.label3.TabIndex = 15;
-            this.label3.Text = "Загружено";
+            this.label3.Text = "0";
             // 
             // textBox1
             // 
@@ -256,9 +131,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 90);
+            this.listBox1.Location = new System.Drawing.Point(12, 116);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(465, 134);
+            this.listBox1.Size = new System.Drawing.Size(465, 121);
             this.listBox1.TabIndex = 19;
             // 
             // buttonStart
@@ -266,7 +141,7 @@
             this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStart.Enabled = false;
-            this.buttonStart.Location = new System.Drawing.Point(12, 230);
+            this.buttonStart.Location = new System.Drawing.Point(12, 241);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(320, 35);
             this.buttonStart.TabIndex = 20;
@@ -277,18 +152,219 @@
             // 
             this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStop.Enabled = false;
-            this.buttonStop.Location = new System.Drawing.Point(337, 230);
+            this.buttonStop.Location = new System.Drawing.Point(337, 241);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(140, 35);
             this.buttonStop.TabIndex = 21;
             this.buttonStop.Text = "Стоп";
             this.buttonStop.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 95);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 13);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "Загружено";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(120, 95);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(62, 13);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "Загружено";
+            // 
+            // labelLastDraw
+            // 
+            this.labelLastDraw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelLastDraw.AutoSize = true;
+            this.labelLastDraw.Location = new System.Drawing.Point(464, 95);
+            this.labelLastDraw.Name = "labelLastDraw";
+            this.labelLastDraw.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelLastDraw.Size = new System.Drawing.Size(13, 13);
+            this.labelLastDraw.TabIndex = 27;
+            this.labelLastDraw.Text = "0";
+            // 
+            // getLastDraw
+            // 
+            this.getLastDraw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.getLastDraw.Enabled = false;
+            this.getLastDraw.Location = new System.Drawing.Point(277, 88);
+            this.getLastDraw.Name = "getLastDraw";
+            this.getLastDraw.Size = new System.Drawing.Size(132, 26);
+            this.getLastDraw.TabIndex = 28;
+            this.getLastDraw.Text = "Последний тираж";
+            this.getLastDraw.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(483, 200);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(157, 17);
+            this.checkBox1.TabIndex = 29;
+            this.checkBox1.Text = "Дополнить текущий фаил";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Enabled = false;
+            this.checkBox2.Location = new System.Drawing.Point(483, 219);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(147, 17);
+            this.checkBox2.TabIndex = 30;
+            this.checkBox2.Text = "Дополнить общий фаил";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // elementButton10
+            // 
+            this.elementButton10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton10.Element = null;
+            this.elementButton10.Location = new System.Drawing.Point(645, 161);
+            this.elementButton10.Name = "elementButton10";
+            this.elementButton10.Size = new System.Drawing.Size(75, 35);
+            this.elementButton10.TabIndex = 11;
+            this.elementButton10.Text = " ";
+            this.elementButton10.UseVisualStyleBackColor = true;
+            // 
+            // elementButton11
+            // 
+            this.elementButton11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton11.Element = null;
+            this.elementButton11.Location = new System.Drawing.Point(564, 161);
+            this.elementButton11.Name = "elementButton11";
+            this.elementButton11.Size = new System.Drawing.Size(75, 35);
+            this.elementButton11.TabIndex = 10;
+            this.elementButton11.Text = " ";
+            this.elementButton11.UseVisualStyleBackColor = true;
+            // 
+            // elementButton12
+            // 
+            this.elementButton12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton12.Element = null;
+            this.elementButton12.Location = new System.Drawing.Point(483, 161);
+            this.elementButton12.Name = "elementButton12";
+            this.elementButton12.Size = new System.Drawing.Size(75, 35);
+            this.elementButton12.TabIndex = 9;
+            this.elementButton12.Text = " ";
+            this.elementButton12.UseVisualStyleBackColor = true;
+            // 
+            // elementButton7
+            // 
+            this.elementButton7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton7.Element = null;
+            this.elementButton7.Location = new System.Drawing.Point(645, 120);
+            this.elementButton7.Name = "elementButton7";
+            this.elementButton7.Size = new System.Drawing.Size(75, 35);
+            this.elementButton7.TabIndex = 8;
+            this.elementButton7.Text = " ";
+            this.elementButton7.UseVisualStyleBackColor = true;
+            // 
+            // elementButton8
+            // 
+            this.elementButton8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton8.Element = null;
+            this.elementButton8.Location = new System.Drawing.Point(564, 120);
+            this.elementButton8.Name = "elementButton8";
+            this.elementButton8.Size = new System.Drawing.Size(75, 35);
+            this.elementButton8.TabIndex = 7;
+            this.elementButton8.Text = " ";
+            this.elementButton8.UseVisualStyleBackColor = true;
+            // 
+            // elementButton9
+            // 
+            this.elementButton9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton9.Element = null;
+            this.elementButton9.Location = new System.Drawing.Point(483, 120);
+            this.elementButton9.Name = "elementButton9";
+            this.elementButton9.Size = new System.Drawing.Size(75, 35);
+            this.elementButton9.TabIndex = 6;
+            this.elementButton9.Text = " ";
+            this.elementButton9.UseVisualStyleBackColor = true;
+            // 
+            // elementButton4
+            // 
+            this.elementButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton4.Element = null;
+            this.elementButton4.Location = new System.Drawing.Point(645, 79);
+            this.elementButton4.Name = "elementButton4";
+            this.elementButton4.Size = new System.Drawing.Size(75, 35);
+            this.elementButton4.TabIndex = 5;
+            this.elementButton4.Text = " ";
+            this.elementButton4.UseVisualStyleBackColor = true;
+            // 
+            // elementButton5
+            // 
+            this.elementButton5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton5.Element = null;
+            this.elementButton5.Location = new System.Drawing.Point(564, 79);
+            this.elementButton5.Name = "elementButton5";
+            this.elementButton5.Size = new System.Drawing.Size(75, 35);
+            this.elementButton5.TabIndex = 4;
+            this.elementButton5.Text = " ";
+            this.elementButton5.UseVisualStyleBackColor = true;
+            // 
+            // elementButton6
+            // 
+            this.elementButton6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton6.Element = null;
+            this.elementButton6.Location = new System.Drawing.Point(483, 79);
+            this.elementButton6.Name = "elementButton6";
+            this.elementButton6.Size = new System.Drawing.Size(75, 35);
+            this.elementButton6.TabIndex = 3;
+            this.elementButton6.Text = " ";
+            this.elementButton6.UseVisualStyleBackColor = true;
+            // 
+            // elementButton3
+            // 
+            this.elementButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton3.Element = null;
+            this.elementButton3.Location = new System.Drawing.Point(645, 38);
+            this.elementButton3.Name = "elementButton3";
+            this.elementButton3.Size = new System.Drawing.Size(75, 35);
+            this.elementButton3.TabIndex = 2;
+            this.elementButton3.Text = " ";
+            this.elementButton3.UseVisualStyleBackColor = true;
+            // 
+            // elementButton2
+            // 
+            this.elementButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton2.Element = null;
+            this.elementButton2.Location = new System.Drawing.Point(564, 38);
+            this.elementButton2.Name = "elementButton2";
+            this.elementButton2.Size = new System.Drawing.Size(75, 35);
+            this.elementButton2.TabIndex = 1;
+            this.elementButton2.Text = " ";
+            this.elementButton2.UseVisualStyleBackColor = true;
+            // 
+            // elementButton1
+            // 
+            this.elementButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementButton1.Element = null;
+            this.elementButton1.Location = new System.Drawing.Point(483, 38);
+            this.elementButton1.Name = "elementButton1";
+            this.elementButton1.Size = new System.Drawing.Size(75, 35);
+            this.elementButton1.TabIndex = 0;
+            this.elementButton1.Text = " ";
+            this.elementButton1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 271);
+            this.ClientSize = new System.Drawing.Size(734, 282);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.getLastDraw);
+            this.Controls.Add(this.labelLastDraw);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.listBox1);
@@ -344,6 +420,12 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Button buttonStop;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelLastDraw;
+        private System.Windows.Forms.Button getLastDraw;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 
