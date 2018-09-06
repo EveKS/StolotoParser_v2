@@ -25,6 +25,8 @@ namespace StolotoParser_v2.Services
             {
                 foreach (var stolotoParseResult in stolotoParseResults)
                 {
+                    if (stolotoParseResult.Numbers == null || stolotoParseResult.Numbers.Count == 0) continue;
+
                     streamWriter.WriteLine(string.Format(format, stolotoParseResult.Draw, string.Join(" ", stolotoParseResult.Numbers.Select(val => val.ToString("d2")))));
                 }
             }

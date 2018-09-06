@@ -31,6 +31,10 @@ namespace StolotoParser_v2
 
         void SetLoaded();
 
+        void AppTextListBox(string text);
+
+        void ClearListBox();
+
         void UpdateSelectedStatuses(Element element, string statusText);
     }
 
@@ -189,7 +193,7 @@ namespace StolotoParser_v2
         {
             set
             {
-                this.InvoceAction(() => 
+                this.InvoceAction(() =>
                 {
                     if (value != null)
                     {
@@ -258,6 +262,8 @@ namespace StolotoParser_v2
 
                 this.fileDataAll.Text = string.Empty;
 
+                this.labelLastDraw.Text = string.Empty;
+
                 this.getLastDraw.Enabled = true;
 
                 var btn = sender as IElementButton;
@@ -266,6 +272,16 @@ namespace StolotoParser_v2
 
                 this.checkBox2.Enabled = !string.IsNullOrEmpty(btn.Element.FileAllName);
             }));
+        }
+
+        public void AppTextListBox(string text)
+        {
+            this.InvoceAction(() => listBox1.Items.Add(text));
+        }
+
+        public void ClearListBox()
+        {
+            this.InvoceAction(() => this.listBox1.Items.Clear());
         }
 
         private void InvoceAction(Action action)

@@ -101,6 +101,8 @@ namespace StolotoParser_v2.Presenters
 
             this._cancellationTokenSource = new CancellationTokenSource();
 
+            this._mainForm.ClearListBox();
+
             this._task = Task.Factory.StartNew(() => this.TaskBody(), this._cancellationTokenSource.Token);
         }
 
@@ -114,6 +116,8 @@ namespace StolotoParser_v2.Presenters
 
         private void MainPresenter_ElementButtonClick(object sender, EventArgs e)
         {
+            this._mainForm.ClearListBox();
+
             var element = (sender as IElementButton).Element;
 
             this._mainForm.UpdateSelectedStatuses((sender as IElementButton).Element, string.Format(this._appSettings.Format, (sender as IElementButton).Element.PathName, 1));
@@ -152,7 +156,9 @@ namespace StolotoParser_v2.Presenters
                     {
                         var datas = firstRow.Split('_');
 
-                        filesData.LastDrawCurrent = Convert.ToInt32(datas[0].Trim());
+                        this._lastDrawCurrent = Convert.ToInt32(datas[0].Trim());
+
+                        filesData.LastDrawCurrent = this._lastDrawCurrent;
                     }
                 }
             }
@@ -169,7 +175,9 @@ namespace StolotoParser_v2.Presenters
                     {
                         var datas = firstRow.Split('_');
 
-                        filesData.LastDrawFull = Convert.ToInt32(datas[0].Trim());
+                        this._lastDrawAll = Convert.ToInt32(datas[0].Trim());
+
+                        filesData.LastDrawFull = this._lastDrawAll;
                     }
                 }
             }
@@ -246,7 +254,16 @@ namespace StolotoParser_v2.Presenters
 
             var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data);
 
-            return stolotoParseResults.Max(val => val.Draw);
+            var max = stolotoParseResults.Max(val => val.Draw);
+
+            var maxVal = stolotoParseResults.FirstOrDefault(val => val.Draw == max);
+
+            if(maxVal.Numbers == null || maxVal.Numbers.Count == 0)
+            {
+                this._mainForm.AppTextListBox(string.Format("{0} тираж ожидается", max--));
+            }
+
+            return max;
         }
     }
 }
