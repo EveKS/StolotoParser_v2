@@ -8,6 +8,6 @@ namespace StolotoParser_v2.Services
 {
     public interface IHtmlParser
     {
-        List<StolotoParseResult> ParseHtml(string content);
+        List<StolotoParseResult> ParseHtml(string content, bool getExtra);
     }
 }

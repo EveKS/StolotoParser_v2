@@ -222,7 +222,7 @@ namespace StolotoParser_v2.Presenters
 
                 if (this._cancellationTokenSource.IsCancellationRequested) return;
 
-                var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data);
+                var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data, this._mainForm.ParsingSettings.ParsingExtraNumbers);
 
                 if (this._cancellationTokenSource.IsCancellationRequested) return;
 
@@ -252,7 +252,7 @@ namespace StolotoParser_v2.Presenters
 
             var postResulModel = this._jsonService.JsonConvertDeserializeObject<PostResulModel>(json);
 
-            var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data);
+            var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data, false);
 
             var max = stolotoParseResults.Max(val => val.Draw);
 

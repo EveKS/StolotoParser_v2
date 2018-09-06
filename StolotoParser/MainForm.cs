@@ -17,6 +17,8 @@ namespace StolotoParser_v2
 
         int SetLastDraw { set; }
 
+        ParsingSettings ParsingSettings { get; }
+
         event EventHandler OnFormLoad;
 
         event EventHandler StopButtonClick;
@@ -251,6 +253,19 @@ namespace StolotoParser_v2
             foreach (var btn in buttons.Skip(elements.Length))
             {
                 (btn as Button).Enabled = false;
+            }
+        }
+
+        public ParsingSettings ParsingSettings
+        {
+            get
+            {
+                return new ParsingSettings()
+                {
+                    AddToAll = this.checkBox1.Checked,
+                    AddToCurrent = this.checkBox2.Checked,
+                    ParsingExtraNumbers = this.checkBox3.Checked
+                };
             }
         }
 

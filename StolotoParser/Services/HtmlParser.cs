@@ -10,7 +10,7 @@ namespace StolotoParser_v2.Services
 {
     public class HtmlParser : IHtmlParser
     {
-        List<StolotoParseResult> IHtmlParser.ParseHtml(string content)
+        List<StolotoParseResult> IHtmlParser.ParseHtml(string content, bool getExtra)
         {
             try
             {
@@ -26,7 +26,11 @@ namespace StolotoParser_v2.Services
 
                     //var prize = cq2[".main .prize.with_jackpot"]; // .FirstChild(super);
                     var draw = Regex.Replace(cq2[".main .draw"].Text(), @"[\W\D]+", string.Empty).Trim();
-                    var numbers = cq2[".main .numbers .container.cleared:not(.sorted):not(.sub) b:not(.extra)"];
+
+                    var numPath = ".main .numbers .container.cleared:not(.sorted):not(.sub) b" + (getExtra ? string.Empty : ":not(.extra)");
+
+                    var numbers = cq2[numPath];
+
                     var intNumbers = numbers.Select(num => Regex.Replace(num.InnerText, @"[\W\D]+", string.Empty).Trim()).Select(int.Parse);
 
                     return new StolotoParseResult()

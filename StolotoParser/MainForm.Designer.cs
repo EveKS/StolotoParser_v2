@@ -42,6 +42,9 @@
             this.getLastDraw = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.elementButton10 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton11 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton12 = new StolotoParser_v2.UserControls.ElementButton();
@@ -54,8 +57,6 @@
             this.elementButton3 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton2 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton1 = new StolotoParser_v2.UserControls.ElementButton();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -188,12 +189,40 @@
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Enabled = false;
-            this.checkBox2.Location = new System.Drawing.Point(483, 219);
+            this.checkBox2.Location = new System.Drawing.Point(483, 223);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(147, 17);
             this.checkBox2.TabIndex = 30;
             this.checkBox2.Text = "Дополнить общий фаил";
             this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 95);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(84, 13);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "Текущий фаил:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(169, 95);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(21, 13);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "All:";
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(483, 246);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(198, 17);
+            this.checkBox3.TabIndex = 33;
+            this.checkBox3.Text = "Парсить дополнительные номера";
+            this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // elementButton10
             // 
@@ -327,29 +356,12 @@
             this.elementButton1.Text = " ";
             this.elementButton1.UseVisualStyleBackColor = true;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 95);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(84, 13);
-            this.label4.TabIndex = 31;
-            this.label4.Text = "Текущий фаил:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(169, 95);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(21, 13);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "All:";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 350);
+            this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBox2);
@@ -417,6 +429,7 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }
 
