@@ -122,7 +122,7 @@ namespace StolotoParser_v2.Presenters
 
             this._mainForm.UpdateSelectedStatuses((sender as IElementButton).Element, string.Format(this._appSettings.Format, (sender as IElementButton).Element.PathName, 1));
 
-            this._mainForm.SetDatas = this.GetDatas(element);
+            this._mainForm.UpdateDatas(this.GetDatas(element));
         }
 
         private void _mainForm_OnLoad(object sender, EventArgs e)
@@ -193,9 +193,13 @@ namespace StolotoParser_v2.Presenters
                 ? this._selectedElement.TotalCount.Value
                 : this._drawInPage;
 
+            var max = total;
+
             var page = 1;
 
             this._fileWriteService.ClearFile(this._selectedElement);
+
+            var setData = true;
 
             while (total > 0)
             {
@@ -226,7 +230,14 @@ namespace StolotoParser_v2.Presenters
 
                 if (this._cancellationTokenSource.IsCancellationRequested) return;
 
-                this._fileWriteService.WriteStolotoResult(stolotoParseResults, this._selectedElement);
+                this._fileWriteService.WriteStolotoResult(stolotoParseResults, this._selectedElement, this._cancellationTokenSource.Token, this._mainForm.UpdateProgres, this._mainForm.AppTextListBox, max - (total + this._drawInPage));
+
+                if (setData)
+                {
+                    setData = false;
+
+                    this._mainForm.UpdateDatas((new FilesData() { LastDrawCurrent = stolotoParseResults.Where(val => val.Numbers.Count > 0).Max(val => val.Draw) }));
+                }
 
                 this._selectedButton.ToolTip = new LotaryToolTip() { Status = postResulModel.Status, Page = page };
 
@@ -258,7 +269,7 @@ namespace StolotoParser_v2.Presenters
 
             var maxVal = stolotoParseResults.FirstOrDefault(val => val.Draw == max);
 
-            if(maxVal.Numbers == null || maxVal.Numbers.Count == 0)
+            if (maxVal.Numbers == null || maxVal.Numbers.Count == 0)
             {
                 this._mainForm.AppTextListBox(string.Format("{0} тираж ожидается", max--));
             }

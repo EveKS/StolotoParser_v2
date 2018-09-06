@@ -13,8 +13,6 @@ namespace StolotoParser_v2
 {
     public interface IMainForm
     {
-        FilesData SetDatas { set; }
-
         int SetLastDraw { set; }
 
         ParsingSettings ParsingSettings { get; }
@@ -37,6 +35,10 @@ namespace StolotoParser_v2
 
         void ClearListBox();
 
+        void UpdateDatas(FilesData filesData);
+
+        void UpdateProgres(int value);
+
         void UpdateSelectedStatuses(Element element, string statusText);
     }
 
@@ -47,6 +49,8 @@ namespace StolotoParser_v2
         private int _defaultValue = 50;
 
         private int _maximum = 30000;
+
+        private int _firstMaximum = 50;
 
         public event EventHandler OnFormLoad;
 
@@ -69,6 +73,10 @@ namespace StolotoParser_v2
             this.numericUpDown1.Increment = this._step;
 
             this.numericUpDown1.Value = this._defaultValue;
+
+            this.progressBar1.Maximum = this._firstMaximum;
+
+            this.progressBar2.Maximum = this._defaultValue;
 
             this.Load += new EventHandler(this.MainForm_Load);
 
@@ -105,6 +113,10 @@ namespace StolotoParser_v2
         {
             this.InvoceAction(new Action(() =>
             {
+                this.progressBar1.Value = 0;
+
+                this.progressBar2.Value = 0;
+
                 (sender as Button).Enabled = false;
 
                 buttonStop.Enabled = true;
@@ -153,11 +165,15 @@ namespace StolotoParser_v2
 
         private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
         {
+            var value = (int)(sender as NumericUpDown).Value;
+
             foreach (var btn in this.Controls.OfType<IElementButton>())
             {
                 if (btn.Element == null) continue;
 
-                btn.Element.TotalCount = (int)(sender as NumericUpDown).Value;
+                this.progressBar2.Maximum = value;
+
+                btn.Element.TotalCount = value;
             }
         }
 
@@ -191,26 +207,23 @@ namespace StolotoParser_v2
             }));
         }
 
-        public FilesData SetDatas
+        public void UpdateDatas(FilesData filesData)
         {
-            set
+            this.InvoceAction(() =>
             {
-                this.InvoceAction(() =>
+                if (filesData != null)
                 {
-                    if (value != null)
+                    if (filesData.LastDrawCurrent != 0)
                     {
-                        if (value.LastDrawCurrent != 0)
-                        {
-                            this.fileDataCurrrent.Text = Convert.ToString(value.LastDrawCurrent);
-                        }
-
-                        if (value.LastDrawFull != 0)
-                        {
-                            this.fileDataAll.Text = Convert.ToString(value.LastDrawFull);
-                        }
+                        this.fileDataCurrrent.Text = Convert.ToString(filesData.LastDrawCurrent);
                     }
-                });
-            }
+
+                    if (filesData.LastDrawFull != 0)
+                    {
+                        this.fileDataAll.Text = Convert.ToString(filesData.LastDrawFull);
+                    }
+                }
+            });
         }
 
         public void UpdateSelectedStatuses(Element element, string statusText)
@@ -273,6 +286,10 @@ namespace StolotoParser_v2
         {
             this.InvoceAction(new Action(() =>
             {
+                this.progressBar1.Value = 0;
+
+                this.progressBar2.Value = 0;
+
                 this.fileDataCurrrent.Text = string.Empty;
 
                 this.fileDataAll.Text = string.Empty;
@@ -297,6 +314,18 @@ namespace StolotoParser_v2
         public void ClearListBox()
         {
             this.InvoceAction(() => this.listBox1.Items.Clear());
+        }
+
+        public void UpdateProgres(int value)
+        {
+            this.InvoceAction(() => 
+            {
+                var fiestValue = (value % this._firstMaximum);
+
+                this.progressBar1.Value = fiestValue;
+
+                this.progressBar2.Value = value;
+            });
         }
 
         private void InvoceAction(Action action)
