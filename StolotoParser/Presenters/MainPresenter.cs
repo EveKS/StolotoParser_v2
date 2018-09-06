@@ -19,13 +19,15 @@ namespace StolotoParser_v2.Presenters
 
         private int _drawInPage = 50;
 
+        private int _lastDrawCurrent;
+
+        private int _lastDrawAll;
+
         private Task _task;
 
         private CancellationTokenSource _cancellationTokenSource;
 
         private AppSettings _appSettings;
-
-        private List<FilesData> _filesData;
 
         private IElementButton _selectedButton;
 
@@ -74,7 +76,7 @@ namespace StolotoParser_v2.Presenters
             this._cancellationTokenSource = new CancellationTokenSource();
 
             this._task = Task.Factory.StartNew(() => this.GetDraw(), this._cancellationTokenSource.Token)
-                .ContinueWith(task => 
+                .ContinueWith(task =>
                 {
                     this._mainForm.SetLastDraw = task.Result;
 
@@ -112,16 +114,16 @@ namespace StolotoParser_v2.Presenters
 
         private void MainPresenter_ElementButtonClick(object sender, EventArgs e)
         {
+            var element = (sender as IElementButton).Element;
+
             this._mainForm.UpdateSelectedStatuses((sender as IElementButton).Element, string.Format(this._appSettings.Format, (sender as IElementButton).Element.PathName, 1));
 
-            this._mainForm.SetDatas = this._filesData.FirstOrDefault(val => val.DataName == (sender as IElementButton).Element.BtnName);
+            this._mainForm.SetDatas = this.GetDatas(element);
         }
 
         private void _mainForm_OnLoad(object sender, EventArgs e)
         {
             this.GetSettings();
-
-            this.GetDatas();
 
             this._mainForm.SetButtons(this._appSettings.Elements);
         }
@@ -134,53 +136,45 @@ namespace StolotoParser_v2.Presenters
             }
         }
 
-        private void GetDatas()
+        private FilesData GetDatas(Element element)
         {
-            this._filesData = new List<FilesData>(this._appSettings.Elements.Length);
+            FilesData filesData = null;
 
-            foreach (var element in this._appSettings.Elements)
+            if (File.Exists(Path.Combine(Application.StartupPath, element.FileName)))
             {
-                FilesData filesData = null;
+                filesData = new FilesData() { DataName = element.BtnName };
 
-                if (File.Exists(Path.Combine(Application.StartupPath, element.FileName)))
+                using (StreamReader sr = new StreamReader(Path.Combine(Application.StartupPath, element.FileName)))
                 {
-                    filesData = new FilesData() { DataName = element.BtnName };
+                    string firstRow = sr.ReadLine();
 
-                    using (StreamReader sr = new StreamReader(Path.Combine(Application.StartupPath, element.FileName)))
+                    if (!string.IsNullOrEmpty(firstRow))
                     {
-                        string firstRow = sr.ReadLine();
+                        var datas = firstRow.Split('_');
 
-                        if (!string.IsNullOrEmpty(firstRow))
-                        {
-                            var datas = firstRow.Split('_');
-
-                            filesData.LastDrawCurrent = Convert.ToInt32(datas[0].Trim());
-                        }
+                        filesData.LastDrawCurrent = Convert.ToInt32(datas[0].Trim());
                     }
-                }
-
-                if (string.IsNullOrEmpty(element.FileAllName) && File.Exists(Path.Combine(Application.StartupPath, element.FileAllName)))
-                {
-                    if (filesData == null) filesData = new FilesData() { DataName = element.BtnName };
-
-                    using (StreamReader sr = new StreamReader(Path.Combine(Application.StartupPath, element.FileAllName)))
-                    {
-                        string firstRow = sr.ReadLine();
-
-                        if (!string.IsNullOrEmpty(firstRow))
-                        {
-                            var datas = firstRow.Split('_');
-
-                            filesData.LastDrawFull = Convert.ToInt32(datas[0].Trim());
-                        }
-                    }
-                }
-
-                if (filesData != null)
-                {
-                    this._filesData.Add(filesData);
                 }
             }
+
+            if (string.IsNullOrEmpty(element.FileAllName) && File.Exists(Path.Combine(Application.StartupPath, element.FileAllName)))
+            {
+                if (filesData == null) filesData = new FilesData() { DataName = element.BtnName };
+
+                using (StreamReader sr = new StreamReader(Path.Combine(Application.StartupPath, element.FileAllName)))
+                {
+                    string firstRow = sr.ReadLine();
+
+                    if (!string.IsNullOrEmpty(firstRow))
+                    {
+                        var datas = firstRow.Split('_');
+
+                        filesData.LastDrawFull = Convert.ToInt32(datas[0].Trim());
+                    }
+                }
+            }
+
+            return filesData;
         }
 
         private void TaskBody()

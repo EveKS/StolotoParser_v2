@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
@@ -56,6 +54,8 @@
             this.elementButton3 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton2 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton1 = new StolotoParser_v2.UserControls.ElementButton();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,40 +63,19 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(512, 238);
+            this.label1.Location = new System.Drawing.Point(512, 306);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 12;
             this.label1.Text = "(от 0 д о 0)";
             // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(655, 238);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Загружено:";
-            // 
             // numericUpDown1
             // 
             this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.Location = new System.Drawing.Point(483, 254);
+            this.numericUpDown1.Location = new System.Drawing.Point(483, 322);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(117, 20);
             this.numericUpDown1.TabIndex = 14;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(658, 256);
-            this.label3.Name = "label3";
-            this.label3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label3.Size = new System.Drawing.Size(13, 13);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "0";
             // 
             // textBox1
             // 
@@ -133,7 +112,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(12, 116);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(465, 121);
+            this.listBox1.Size = new System.Drawing.Size(465, 186);
             this.listBox1.TabIndex = 19;
             // 
             // buttonStart
@@ -141,7 +120,7 @@
             this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStart.Enabled = false;
-            this.buttonStart.Location = new System.Drawing.Point(12, 241);
+            this.buttonStart.Location = new System.Drawing.Point(12, 309);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(320, 35);
             this.buttonStart.TabIndex = 20;
@@ -152,7 +131,7 @@
             // 
             this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStop.Enabled = false;
-            this.buttonStop.Location = new System.Drawing.Point(337, 241);
+            this.buttonStop.Location = new System.Drawing.Point(337, 309);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(140, 35);
             this.buttonStop.TabIndex = 21;
@@ -162,7 +141,7 @@
             // fileDataCurrrent
             // 
             this.fileDataCurrrent.AutoSize = true;
-            this.fileDataCurrrent.Location = new System.Drawing.Point(12, 95);
+            this.fileDataCurrrent.Location = new System.Drawing.Point(93, 95);
             this.fileDataCurrrent.Name = "fileDataCurrrent";
             this.fileDataCurrrent.Size = new System.Drawing.Size(0, 13);
             this.fileDataCurrrent.TabIndex = 22;
@@ -170,7 +149,7 @@
             // fileDataAll
             // 
             this.fileDataAll.AutoSize = true;
-            this.fileDataAll.Location = new System.Drawing.Point(120, 95);
+            this.fileDataAll.Location = new System.Drawing.Point(196, 95);
             this.fileDataAll.Name = "fileDataAll";
             this.fileDataAll.Size = new System.Drawing.Size(0, 13);
             this.fileDataAll.TabIndex = 23;
@@ -348,11 +327,31 @@
             this.elementButton1.Text = " ";
             this.elementButton1.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 95);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(84, 13);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "Текущий фаил:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(169, 95);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(21, 13);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "All:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 282);
+            this.ClientSize = new System.Drawing.Size(734, 350);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.getLastDraw);
@@ -365,9 +364,7 @@
             this.Controls.Add(this.progressBar2);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.elementButton10);
             this.Controls.Add(this.elementButton11);
@@ -405,9 +402,7 @@
         private UserControls.ElementButton elementButton11;
         private UserControls.ElementButton elementButton12;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ProgressBar progressBar2;
@@ -420,6 +415,8 @@
         private System.Windows.Forms.Button getLastDraw;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
     }
 }
 
