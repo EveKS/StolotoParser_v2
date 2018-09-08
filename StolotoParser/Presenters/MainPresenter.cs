@@ -41,10 +41,8 @@ namespace StolotoParser_v2.Presenters
 
         private readonly IHtmlParser _htmlParser;
 
-        private readonly IFileWriteService _fileWriteService;
-
         public MainPresenter(IMainForm mainForm, IJsonService jsonService, IHtmlService htmlService,
-            IHtmlParser htmlParser, IFileWriteService fileWriteService)
+            IHtmlParser htmlParser)
         {
             this._mainForm = mainForm;
 
@@ -53,8 +51,6 @@ namespace StolotoParser_v2.Presenters
             this._htmlService = htmlService;
 
             this._htmlParser = htmlParser;
-
-            this._fileWriteService = fileWriteService;
 
             this._mainForm.OnFormLoad += new EventHandler(this._mainForm_OnLoad);
 
@@ -160,10 +156,14 @@ namespace StolotoParser_v2.Presenters
 
                         filesData.LastDrawCurrent = this._lastDrawCurrent;
                     }
+                    else
+                    {
+                        this._lastDrawCurrent = 0;
+                    }
                 }
             }
 
-            if (string.IsNullOrEmpty(element.FileAllName) && File.Exists(Path.Combine(Application.StartupPath, element.FileAllName)))
+            if (!string.IsNullOrEmpty(element.FileAllName) && File.Exists(Path.Combine(Application.StartupPath, element.FileAllName)))
             {
                 if (filesData == null) filesData = new FilesData() { DataName = element.BtnName };
 
@@ -187,6 +187,12 @@ namespace StolotoParser_v2.Presenters
 
         private void TaskBody()
         {
+            var parsingSettings = this._mainForm.ParsingSettings;
+
+            IFileWriteService fileWriteService = new FileWriteService(parsingSettings, this._selectedElement, this._cancellationTokenSource.Token, this._mainForm.UpdateProgres, this._mainForm.AppTextListBox, this._lastDrawCurrent, this._lastDrawAll);
+
+            fileWriteService.InitialOldData();
+
             var newFormat = "";
 
             var total = this._selectedElement.TotalCount.HasValue && this._selectedElement.TotalCount.Value > 0
@@ -197,12 +203,19 @@ namespace StolotoParser_v2.Presenters
 
             var page = 1;
 
-            this._fileWriteService.ClearFile(this._selectedElement);
+            if (!parsingSettings.AddToCurrent) fileWriteService.ClearFile();
 
             var setData = true;
 
-            while (total > 0)
+            this._startDraw = this._lastDrawCurrent + 1;
+
+            while (((parsingSettings.AddToAll ? true : (parsingSettings.AddToCurrent ? (this._startDraw > this._lastDrawCurrent || total > 0) : total > 0))))
             {
+                if(total == 0)
+                {
+                    this._mainForm.AppTextListBox("Идет запись в общий фаил");
+                }
+
                 if (this._loadedPage == -1)
                 {
                     this._loadedPage = 1;
@@ -226,11 +239,11 @@ namespace StolotoParser_v2.Presenters
 
                 if (this._cancellationTokenSource.IsCancellationRequested) return;
 
-                var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data, this._mainForm.ParsingSettings.ParsingExtraNumbers);
+                var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data, parsingSettings.ParsingExtraNumbers);
 
                 if (this._cancellationTokenSource.IsCancellationRequested) return;
 
-                this._fileWriteService.WriteStolotoResult(stolotoParseResults, this._selectedElement, this._cancellationTokenSource.Token, this._mainForm.UpdateProgres, this._mainForm.AppTextListBox, max - (total + this._drawInPage));
+                fileWriteService.WriteStolotoResult(stolotoParseResults, max - (total + this._drawInPage));
 
                 if (setData)
                 {
@@ -241,7 +254,10 @@ namespace StolotoParser_v2.Presenters
 
                 this._selectedButton.ToolTip = new LotaryToolTip() { Status = postResulModel.Status, Page = page };
 
-                if (postResulModel.Stop) break;
+                var breakIteration = (parsingSettings.AddToCurrent ? stolotoParseResults.Any(val => val.Draw == this._lastDrawCurrent) : total == 0)
+                    && (parsingSettings.AddToAll ? stolotoParseResults.Any(val => val.Draw == this._lastDrawAll) : true);
+
+                if (postResulModel.Stop || breakIteration) break;
 
                 this._startDraw = stolotoParseResults.Min(val => val.Draw);
 
@@ -249,6 +265,8 @@ namespace StolotoParser_v2.Presenters
 
                 this._loadedPage++;
             }
+
+            fileWriteService.WritOldData();
 
             this._loadedPage = -1;
 

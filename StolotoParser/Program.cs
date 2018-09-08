@@ -26,11 +26,7 @@ namespace StolotoParser_v2
 
             IHtmlParser htmlParser = new HtmlParser();
 
-            IFileWriteService fileWriteService = new FileWriteService();
-
-            //FileWriteService : IFileWriteService
-
-            var presenter = new MainPresenter(form, jsonService, htmlService, htmlParser, fileWriteService);
+            var presenter = new MainPresenter(form, jsonService, htmlService, htmlParser);
 
             Application.Run(form);
         }
