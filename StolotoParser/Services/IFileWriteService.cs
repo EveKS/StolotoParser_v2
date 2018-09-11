@@ -7,12 +7,10 @@ namespace StolotoParser_v2.Services
 {
     public interface IFileWriteService
     {
-        void ClearFile(bool fileAll = false);
-
-        void WriteStolotoResult(List<StolotoParseResult> stolotoParseResults, int fistProgresValue);
+        void AppendResults(List<StolotoParseResult> stolotoParseResults);
 
         void InitialOldData();
 
-        void WritOldData();
+        void Finalize();
     }
 }

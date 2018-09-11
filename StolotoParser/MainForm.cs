@@ -50,8 +50,6 @@ namespace StolotoParser_v2
 
         private int _maximum = 30000;
 
-        private int _firstMaximum = 50;
-
         public event EventHandler OnFormLoad;
 
         public event EventHandler StartButtonClick;
@@ -73,8 +71,6 @@ namespace StolotoParser_v2
             this.numericUpDown1.Increment = this._step;
 
             this.numericUpDown1.Value = this._defaultValue;
-
-            this.progressBar1.Maximum = this._firstMaximum;
 
             this.progressBar2.Maximum = this._defaultValue;
 
@@ -113,8 +109,6 @@ namespace StolotoParser_v2
         {
             this.InvoceAction(new Action(() =>
             {
-                this.progressBar1.Value = 0;
-
                 this.progressBar2.Value = 0;
 
                 (sender as Button).Enabled = false;
@@ -126,8 +120,6 @@ namespace StolotoParser_v2
 
                 foreach (var btn in buttons)
                 {
-                    if (btn == this._selectedButton) continue;
-
                     (btn as Button).Enabled = false;
                 }
 
@@ -286,8 +278,6 @@ namespace StolotoParser_v2
         {
             this.InvoceAction(new Action(() =>
             {
-                this.progressBar1.Value = 0;
-
                 this.progressBar2.Value = 0;
 
                 this.fileDataCurrrent.Text = string.Empty;
@@ -320,10 +310,6 @@ namespace StolotoParser_v2
         {
             this.InvoceAction(() => 
             {
-                var fiestValue = (value % this._firstMaximum);
-
-                this.progressBar1.Value = fiestValue;
-
                 this.progressBar2.Value = value;
             });
         }

@@ -35,6 +35,10 @@ namespace StolotoParser_v2.Services
 
         private List<StolotoParseResult> _oldDrawsAll;
 
+        private List<StolotoParseResult> _newDraws;
+
+        private List<StolotoParseResult> _newDrawsAll;
+
         public FileWriteService(ParsingSettings parsingSettings, Element element, CancellationToken tocken, Action<int> setProgres, Action<string> uppText, int stopDrowCurrent, int stopDrowAll)
         {
             this._parsingSettings = parsingSettings;
@@ -56,7 +60,11 @@ namespace StolotoParser_v2.Services
             this._filePath = Path.Combine(Application.StartupPath, element.FileName);
 
             this._fileAllPath = Path.Combine(Application.StartupPath, element.FileAllName);
-        }
+
+            this._newDraws = new List<StolotoParseResult>();
+
+            this._newDrawsAll = new List<StolotoParseResult>();
+    }
 
         public void InitialOldData()
         {
@@ -71,19 +79,6 @@ namespace StolotoParser_v2.Services
                 this._oldDrawsAll = new List<StolotoParseResult>();
 
                 this.Update(true);
-            }
-        }
-
-        public void WritOldData()
-        {
-            if (this._parsingSettings.AddToAll)
-            {
-                if (this._oldDrawsAll.Count > 0) this.WriteInfo(this._oldDrawsAll, 0, this._parsingSettings.AddToAll, false);
-            }
-
-            if (this._parsingSettings.AddToCurrent)
-            {
-                if (this._oldDraws.Count > 0) this.WriteInfo(this._oldDraws, 0, false, false);
             }
         }
 
@@ -111,32 +106,47 @@ namespace StolotoParser_v2.Services
                     }
                 }
             }
-
-            this.ClearFile(writeToAllFile);
         }
 
-        void IFileWriteService.WriteStolotoResult(List<StolotoParseResult> stolotoParseResults, int fistProgresValue)
+        void IFileWriteService.AppendResults(List<StolotoParseResult> stolotoParseResults)
         {
             if (this._parsingSettings.AddToAll)
             {
-                this.WriteInfo(stolotoParseResults, fistProgresValue, this._parsingSettings.AddToAll);
+                this._newDrawsAll.AddRange(stolotoParseResults);
             }
 
-            this.WriteInfo(stolotoParseResults, fistProgresValue);
+            this._newDraws.AddRange(stolotoParseResults);
         }
 
-        private void WriteInfo(List<StolotoParseResult> stolotoParseResults, int fistProgresValue, bool toAllFile = false, bool setStopDraw = true)
+        void IFileWriteService.Finalize()
+        {
+            if (this._parsingSettings.AddToAll && !this._tocken.IsCancellationRequested)
+            {
+                var newAllData = this._oldDrawsAll != null ? this._oldDrawsAll.Concat(this._newDrawsAll) : this._newDrawsAll;
+
+                this.WriteInfo(newAllData, 0, this._parsingSettings.AddToAll);
+            }
+
+            if (!this._tocken.IsCancellationRequested)
+            {
+                var newData = this._oldDraws != null ? this._oldDraws.Concat(this._newDraws) : this._newDraws;
+
+                this.WriteInfo(newData, 0, false, this._parsingSettings.AddToCurrent);
+            }
+        }
+
+        private void WriteInfo(IEnumerable<StolotoParseResult> stolotoParseResults, int fistProgresValue, bool toAllFile = false, bool setStopDraw = true)
         {
             var path = toAllFile ? this._fileAllPath : this._filePath;
 
             var stopDraw = setStopDraw ? toAllFile ? this._stopDrowAll : this._stopDrowCurrent : -1;
 
-            using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.Default))
             {
-                foreach (var stolotoParseResult in stolotoParseResults)
+                foreach (var stolotoParseResult in stolotoParseResults.OrderBy(v => -v.Draw).Distinct(new BoxEqualityComparer()))
                 {
-                    if (this._tocken.IsCancellationRequested || stolotoParseResult.Draw <= stopDraw) return;
+                    if (this._tocken.IsCancellationRequested) return;
 
                     if (!toAllFile)
                     {
@@ -145,7 +155,12 @@ namespace StolotoParser_v2.Services
                         this._setProgres(fistProgresValue);
                     }
 
-                    if (stolotoParseResult.Numbers == null || stolotoParseResult.Numbers.Count == 0) continue;
+                    if (stolotoParseResult.Numbers == null || stolotoParseResult.Numbers.Count == 0)
+                    {
+                        this._uppText(string.Format("{0} тираж ожидается", stolotoParseResult.Draw));
+
+                        continue;
+                    }
 
                     var info = string.Format(this._fileFormat, stolotoParseResult.Draw, string.Join(" ", stolotoParseResult.Numbers.Select(val => val.ToString("d2"))));
 
@@ -158,10 +173,25 @@ namespace StolotoParser_v2.Services
                 }
             }
         }
+    }
 
-        public void ClearFile(bool fileAll)
+    class BoxEqualityComparer : IEqualityComparer<StolotoParseResult>
+    {
+        public bool Equals(StolotoParseResult a, StolotoParseResult b)
         {
-            using (FileStream fileStream = new FileStream(fileAll ? this._fileAllPath : this._filePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite)) { }
+            return a.Draw == b.Draw;
+        }
+
+        public int GetHashCode(StolotoParseResult stolotoParseResult)
+        {
+            int hCode = stolotoParseResult.Draw;
+
+            for (int index = 0; index < stolotoParseResult.Numbers.Count; index++)
+            {
+                hCode ^= stolotoParseResult.Numbers[index];
+            }
+
+            return hCode.GetHashCode();
         }
     }
 }

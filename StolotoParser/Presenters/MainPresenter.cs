@@ -69,6 +69,11 @@ namespace StolotoParser_v2.Presenters
 
             this._selectedElement = this._selectedButton.Element;
 
+            if(this._cancellationTokenSource != null)
+            {
+                this._cancellationTokenSource.Cancel();
+            }
+
             this._cancellationTokenSource = new CancellationTokenSource();
 
             this._task = Task.Factory.StartNew(() => this.GetDraw(), this._cancellationTokenSource.Token)
@@ -94,6 +99,11 @@ namespace StolotoParser_v2.Presenters
             this._selectedButton = sender as IElementButton;
 
             this._selectedElement = this._selectedButton.Element;
+
+            if (this._cancellationTokenSource != null)
+            {
+                this._cancellationTokenSource.Cancel();
+            }
 
             this._cancellationTokenSource = new CancellationTokenSource();
 
@@ -203,8 +213,6 @@ namespace StolotoParser_v2.Presenters
 
             var page = 1;
 
-            if (!parsingSettings.AddToCurrent) fileWriteService.ClearFile();
-
             var setData = true;
 
             this._startDraw = this._lastDrawCurrent + 1;
@@ -227,7 +235,7 @@ namespace StolotoParser_v2.Presenters
                     newFormat = string.Format(this._appSettings.ContinueFormat, this._selectedElement.PathName, 1, this._startDraw);
                 }
 
-                total = total - this._drawInPage > this._drawInPage ? total - this._drawInPage : 0;
+                total = total - this._drawInPage >= this._drawInPage ? total - this._drawInPage : 0;
 
                 if (this._cancellationTokenSource.IsCancellationRequested) return;
 
@@ -243,7 +251,7 @@ namespace StolotoParser_v2.Presenters
 
                 if (this._cancellationTokenSource.IsCancellationRequested) return;
 
-                fileWriteService.WriteStolotoResult(stolotoParseResults, max - (total + this._drawInPage));
+                fileWriteService.AppendResults(stolotoParseResults);
 
                 if (setData)
                 {
@@ -254,19 +262,19 @@ namespace StolotoParser_v2.Presenters
 
                 this._selectedButton.ToolTip = new LotaryToolTip() { Status = postResulModel.Status, Page = page };
 
-                var breakIteration = (parsingSettings.AddToCurrent ? stolotoParseResults.Any(val => val.Draw == this._lastDrawCurrent) : total == 0)
-                    && (parsingSettings.AddToAll ? stolotoParseResults.Any(val => val.Draw == this._lastDrawAll) : true);
+                var breakIteration = (parsingSettings.AddToCurrent ? stolotoParseResults.Any(val => val.Draw <= this._lastDrawCurrent) : total == 0)
+                    && (parsingSettings.AddToAll ? stolotoParseResults.Any(val => val.Draw <= this._lastDrawAll) : true);
 
                 if (postResulModel.Stop || breakIteration) break;
 
-                this._startDraw = stolotoParseResults.Min(val => val.Draw);
+                this._startDraw = stolotoParseResults.Min(val => val.Draw) - 1;
 
                 page++;
 
                 this._loadedPage++;
             }
 
-            fileWriteService.WritOldData();
+            fileWriteService.Finalize();
 
             this._loadedPage = -1;
 
