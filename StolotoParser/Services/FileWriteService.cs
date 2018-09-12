@@ -117,6 +117,11 @@ namespace StolotoParser_v2.Services
                 this._newDrawsAll.AddRange(stolotoParseResults);
             }
 
+            if (this._parsingSettings.AddToCurrent && stolotoParseResults.Any(d => d.Draw <= this._stopDrowCurrent))
+            {
+                stolotoParseResults = stolotoParseResults.Where(d => d.Draw > this._stopDrowCurrent).ToList();
+            }
+
             this._newDraws.AddRange(stolotoParseResults);
         }
 
@@ -132,6 +137,11 @@ namespace StolotoParser_v2.Services
             if (!this._tocken.IsCancellationRequested)
             {
                 var newData = this._oldDraws != null ? this._oldDraws.Concat(this._newDraws) : this._newDraws;
+
+                if (!this._parsingSettings.AddToCurrent)
+                {
+                    newData = newData.Take(this._stopDrowCurrent);
+                }
 
                 this.WriteInfo(newData, 0, false, this._parsingSettings.AddToCurrent);
             }
@@ -152,7 +162,7 @@ namespace StolotoParser_v2.Services
             {
                 foreach (var stolotoParseResult in collection)
                 {
-                    if (this._tocken.IsCancellationRequested || stolotoParseResult.Draw <= stopDraw) return;
+                    if (this._tocken.IsCancellationRequested) return;
 
                     if (!toAllFile)
                     {

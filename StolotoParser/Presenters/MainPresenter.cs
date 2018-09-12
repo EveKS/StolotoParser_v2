@@ -199,15 +199,17 @@ namespace StolotoParser_v2.Presenters
         {
             var parsingSettings = this._mainForm.ParsingSettings;
 
-            IFileWriteService fileWriteService = new FileWriteService(parsingSettings, this._selectedElement, this._cancellationTokenSource.Token, this._mainForm.UpdateProgres, this._mainForm.AppTextListBox, this._lastDrawCurrent, this._lastDrawAll);
-
-            fileWriteService.InitialOldData();
-
             var newFormat = "";
 
             var total = this._selectedElement.TotalCount.HasValue && this._selectedElement.TotalCount.Value > 0
                 ? this._selectedElement.TotalCount.Value
                 : this._drawInPage;
+
+            var stopTakeDrawCurrent = parsingSettings.AddToCurrent ? this._lastDrawCurrent : total;
+
+            IFileWriteService fileWriteService = new FileWriteService(parsingSettings, this._selectedElement, this._cancellationTokenSource.Token, this._mainForm.UpdateProgres, this._mainForm.AppTextListBox, stopTakeDrawCurrent, this._lastDrawAll);
+
+            fileWriteService.InitialOldData();
 
             var max = total;
 
