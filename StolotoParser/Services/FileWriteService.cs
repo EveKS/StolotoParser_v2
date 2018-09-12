@@ -15,7 +15,7 @@ namespace StolotoParser_v2.Services
 
         private readonly Element _element;
 
-        private readonly Action<int> _setProgres;
+        private readonly Action<int, int> _setProgres;
 
         private readonly Action<string> _uppText;
 
@@ -39,7 +39,7 @@ namespace StolotoParser_v2.Services
 
         private List<StolotoParseResult> _newDrawsAll;
 
-        public FileWriteService(ParsingSettings parsingSettings, Element element, CancellationToken tocken, Action<int> setProgres, Action<string> uppText, int stopDrowCurrent, int stopDrowAll)
+        public FileWriteService(ParsingSettings parsingSettings, Element element, CancellationToken tocken, Action<int, int> setProgres, Action<string> uppText, int stopDrowCurrent, int stopDrowAll)
         {
             this._parsingSettings = parsingSettings;
 
@@ -84,6 +84,8 @@ namespace StolotoParser_v2.Services
 
         private void Update(bool writeToAllFile)
         {
+            if (!File.Exists(writeToAllFile ? this._fileAllPath : this._filePath)) return;
+
             using (StreamReader sr = new StreamReader(writeToAllFile ? this._fileAllPath : this._filePath))
             {
                 while (!sr.EndOfStream)
@@ -124,7 +126,7 @@ namespace StolotoParser_v2.Services
             {
                 var newAllData = this._oldDrawsAll != null ? this._oldDrawsAll.Concat(this._newDrawsAll) : this._newDrawsAll;
 
-                this.WriteInfo(newAllData, 0, this._parsingSettings.AddToAll);
+                this.WriteInfo(newAllData, 0, this._parsingSettings.AddToAll, true);
             }
 
             if (!this._tocken.IsCancellationRequested)
@@ -135,24 +137,28 @@ namespace StolotoParser_v2.Services
             }
         }
 
-        private void WriteInfo(IEnumerable<StolotoParseResult> stolotoParseResults, int fistProgresValue, bool toAllFile = false, bool setStopDraw = true)
+        private void WriteInfo(IEnumerable<StolotoParseResult> stolotoParseResults, int fistProgresValue, bool toAllFile = false, bool setStopDraw = false)
         {
             var path = toAllFile ? this._fileAllPath : this._filePath;
 
             var stopDraw = setStopDraw ? toAllFile ? this._stopDrowAll : this._stopDrowCurrent : -1;
 
+            var collection = stolotoParseResults.OrderBy(v => -v.Draw).Distinct(new BoxEqualityComparer());
+
+            var maximum = collection.Count();
+
             using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.Default))
             {
-                foreach (var stolotoParseResult in stolotoParseResults.OrderBy(v => -v.Draw).Distinct(new BoxEqualityComparer()))
+                foreach (var stolotoParseResult in collection)
                 {
-                    if (this._tocken.IsCancellationRequested) return;
+                    if (this._tocken.IsCancellationRequested || stolotoParseResult.Draw <= stopDraw) return;
 
                     if (!toAllFile)
                     {
                         fistProgresValue++;
 
-                        this._setProgres(fistProgresValue);
+                        this._setProgres(fistProgresValue, maximum);
                     }
 
                     if (stolotoParseResult.Numbers == null || stolotoParseResult.Numbers.Count == 0)

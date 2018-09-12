@@ -219,11 +219,6 @@ namespace StolotoParser_v2.Presenters
 
             while (((parsingSettings.AddToAll ? true : (parsingSettings.AddToCurrent ? (this._startDraw > this._lastDrawCurrent || total > 0) : total > 0))))
             {
-                if(total == 0)
-                {
-                    this._mainForm.AppTextListBox("Идет запись в общий фаил");
-                }
-
                 if (this._loadedPage == -1)
                 {
                     this._loadedPage = 1;

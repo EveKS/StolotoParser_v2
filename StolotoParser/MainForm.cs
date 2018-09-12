@@ -37,7 +37,7 @@ namespace StolotoParser_v2
 
         void UpdateDatas(FilesData filesData);
 
-        void UpdateProgres(int value);
+        void UpdateProgres(int value, int max);
 
         void UpdateSelectedStatuses(Element element, string statusText);
     }
@@ -306,10 +306,12 @@ namespace StolotoParser_v2
             this.InvoceAction(() => this.listBox1.Items.Clear());
         }
 
-        public void UpdateProgres(int value)
+        public void UpdateProgres(int value, int max)
         {
             this.InvoceAction(() => 
             {
+                this.progressBar2.Maximum = max;
+
                 this.progressBar2.Value = value;
             });
         }
