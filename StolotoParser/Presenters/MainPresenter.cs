@@ -61,6 +61,132 @@ namespace StolotoParser_v2.Presenters
             this._mainForm.StopButtonClick += this._mainForm_StopButtonClick;
 
             this._mainForm.GetLastDrawClick += _mainForm_GetLastDrawClick;
+
+            this._mainForm.ButtonTestClick += _mainForm_ButtonTestClick;
+        }
+
+        private void _mainForm_ButtonTestClick(object sender, EventArgs e)
+        {
+            var selectedElement = sender as Element;
+
+            if (!string.IsNullOrWhiteSpace(selectedElement.FileName))
+            {
+                this.TestFile(selectedElement.FileName);
+            }
+
+            if (!string.IsNullOrWhiteSpace(selectedElement.FileAllName))
+            {
+                this.TestFile(selectedElement.FileAllName);
+            }
+        }
+
+        private void TestFile(string filePath)
+        {
+            this._mainForm.AppTextListBox(string.Format("Проверяется {0} фаил", filePath));
+
+            var stolotoParseResults = this.GetData(filePath);
+
+            if (stolotoParseResults == null)
+            {
+                this._mainForm.AppTextListBox(string.Format("Фаил {0} отсутствует", filePath));
+            }
+            else
+            {
+                this.GetDetails(stolotoParseResults);
+
+                this.AbsenceTest(stolotoParseResults);
+
+                this.OrderTest(stolotoParseResults);
+
+                this.DuplicateTest(stolotoParseResults);
+            }
+        }
+
+        private void OrderTest(IEnumerable<StolotoParseResult> stolotoParseResults)
+        {
+            StolotoParseResult old = null;
+
+            foreach (var item in stolotoParseResults)
+            {
+                if (old != null && (old.Draw - 1) != item.Draw)
+                {
+                    this._mainForm.AppTextListBox(string.Format("Нарушен порядок: {0} {1} тиражей", old.Draw, item.Draw));
+                }
+
+                old = item;
+            }
+        }
+
+        private void AbsenceTest(IEnumerable<StolotoParseResult> stolotoParseResults)
+        {
+            var tempData = stolotoParseResults.Distinct(new BoxEqualityComparer()).OrderBy(s => s.Draw).ToList();
+
+            var fistDraw = tempData.FirstOrDefault().Draw;
+
+            var lastDraw = tempData.LastOrDefault().Draw;
+
+            for (int i = 0, j = fistDraw; i < tempData.Count; j++)
+            {
+                var draw = tempData[i].Draw;
+
+                if (draw != j)
+                {
+                    this._mainForm.AppTextListBox(string.Format("Тираж {0} отсутствует", j));
+                }
+                else
+                {
+                    i++;
+                }
+
+                if (j == lastDraw) break;
+            }
+        }
+
+        private void DuplicateTest(IEnumerable<StolotoParseResult> stolotoParseResults)
+        {
+            foreach (var item in stolotoParseResults.GroupBy(s => s.Draw).Where(g => g.Count() > 1))
+            {
+                this._mainForm.AppTextListBox(string.Format("Тираж {0} встречается: {1} раза", item.Key, item.Count()));
+            }
+        }
+
+        private void GetDetails(IEnumerable<StolotoParseResult> stolotoParseResults)
+        {
+            if (stolotoParseResults.Count() == 0)
+            {
+                this._mainForm.AppTextListBox("Фаил пуст");
+            }
+
+            this._mainForm.AppTextListBox(string.Format("Всего тиражей в файле {0}, из них уникальных: {1}", stolotoParseResults.Count(), stolotoParseResults.Distinct(new BoxEqualityComparer()).Count()));
+
+            this._mainForm.AppTextListBox(string.Format("Первый тираж в файле {0}, минимальный: {1}", stolotoParseResults.LastOrDefault().Draw, stolotoParseResults.Min(s => s.Draw)));
+
+            this._mainForm.AppTextListBox(string.Format("Последний тираж в файле {0}, максимальный: {1}", stolotoParseResults.FirstOrDefault().Draw, stolotoParseResults.Max(s => s.Draw)));
+        }
+
+        private List<StolotoParseResult> GetData(string filePath)
+        {
+            if (!File.Exists(filePath)) return null;
+
+            var stolotoParseResults = new List<StolotoParseResult>();
+
+            using (StreamReader sr = new StreamReader(Path.Combine(Application.StartupPath, filePath)))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string firstRow = sr.ReadLine();
+
+                    var datas = firstRow.Split('_');
+
+                    var draw = Convert.ToInt32(datas[0].Trim());
+
+                    var numbers = datas[1].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(n => Convert.ToInt32(n.TrimStart('0')));
+
+                    stolotoParseResults.Add(new StolotoParseResult() { Draw = draw, Numbers = numbers.ToList() });
+                }
+            }
+
+            return stolotoParseResults;
         }
 
         private void _mainForm_GetLastDrawClick(object sender, EventArgs e)
@@ -69,7 +195,7 @@ namespace StolotoParser_v2.Presenters
 
             this._selectedElement = this._selectedButton.Element;
 
-            if(this._cancellationTokenSource != null)
+            if (this._cancellationTokenSource != null)
             {
                 this._cancellationTokenSource.Cancel();
             }

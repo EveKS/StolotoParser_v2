@@ -27,6 +27,8 @@ namespace StolotoParser_v2
 
         event EventHandler GetLastDrawClick;
 
+        event EventHandler ButtonTestClick;
+
         void SetButtons(Element[] elements);
 
         void SetLoaded();
@@ -60,7 +62,9 @@ namespace StolotoParser_v2
 
         public event EventHandler GetLastDrawClick;
 
-        private IElementButton _selectedButton;
+        public event EventHandler ButtonTestClick;
+
+        private IElementButton _selectedButton; 
 
         public MainForm()
         {
@@ -83,6 +87,16 @@ namespace StolotoParser_v2
             this.buttonStart.Click += ButtonStart_Click;
 
             this.getLastDraw.Click += GetLastDraw_Click;
+
+            this.buttonTest.Click += ButtonTest_Click;
+        }
+
+        private void ButtonTest_Click(object sender, EventArgs e)
+        {
+            if (this.ButtonTestClick != null)
+            {
+                this.ButtonTestClick.Invoke(this._selectedButton.Element, EventArgs.Empty);
+            }
         }
 
         private void GetLastDraw_Click(object sender, EventArgs e)
@@ -90,6 +104,8 @@ namespace StolotoParser_v2
             this.buttonStart.Enabled = false;
 
             this.buttonStop.Enabled = false;
+
+            this.buttonTest.Enabled = false;
 
             var buttons = this.Controls.OfType<IElementButton>()
                 .OrderBy(bt => (bt as Button).TabIndex);
@@ -115,6 +131,8 @@ namespace StolotoParser_v2
 
                 buttonStop.Enabled = true;
 
+                this.buttonTest.Enabled = false;
+
                 var buttons = this.Controls.OfType<IElementButton>()
                     .OrderBy(bt => (bt as Button).TabIndex);
 
@@ -137,6 +155,8 @@ namespace StolotoParser_v2
                 (sender as Button).Enabled = false;
 
                 buttonStart.Enabled = true;
+
+                this.buttonTest.Enabled = true;
 
                 var buttons = this.Controls.OfType<IElementButton>()
                     .OrderBy(bt => (bt as Button).TabIndex);
@@ -185,6 +205,8 @@ namespace StolotoParser_v2
             {
                 this.buttonStart.Enabled = true;
 
+                this.buttonTest.Enabled = true;
+
                 this.buttonStop.Enabled = false;
 
                 var buttons = this.Controls.OfType<IElementButton>()
@@ -223,6 +245,8 @@ namespace StolotoParser_v2
             this.InvoceAction(new Action(() =>
             {
                 this.buttonStart.Enabled = true;
+
+                this.buttonTest.Enabled = true;
 
                 var total = element.TotalCount.HasValue ? (int)element.TotalCount : 50;
 

@@ -56,6 +56,7 @@
             this.elementButton3 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton2 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton1 = new StolotoParser_v2.UserControls.ElementButton();
+            this.buttonTest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +64,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(512, 310);
+            this.label1.Location = new System.Drawing.Point(512, 302);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 12;
@@ -72,7 +73,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.Location = new System.Drawing.Point(483, 326);
+            this.numericUpDown1.Location = new System.Drawing.Point(483, 318);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(117, 20);
             this.numericUpDown1.TabIndex = 14;
@@ -103,7 +104,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(12, 96);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(465, 212);
+            this.listBox1.Size = new System.Drawing.Size(465, 199);
             this.listBox1.TabIndex = 19;
             // 
             // buttonStart
@@ -111,9 +112,9 @@
             this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStart.Enabled = false;
-            this.buttonStart.Location = new System.Drawing.Point(12, 313);
+            this.buttonStart.Location = new System.Drawing.Point(12, 305);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(320, 35);
+            this.buttonStart.Size = new System.Drawing.Size(173, 35);
             this.buttonStart.TabIndex = 20;
             this.buttonStart.Text = "Старт";
             this.buttonStart.UseVisualStyleBackColor = true;
@@ -122,7 +123,7 @@
             // 
             this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStop.Enabled = false;
-            this.buttonStop.Location = new System.Drawing.Point(337, 313);
+            this.buttonStop.Location = new System.Drawing.Point(194, 305);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(140, 35);
             this.buttonStop.TabIndex = 21;
@@ -346,11 +347,23 @@
             this.elementButton1.Text = " ";
             this.elementButton1.UseVisualStyleBackColor = true;
             // 
+            // buttonTest
+            // 
+            this.buttonTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonTest.Enabled = false;
+            this.buttonTest.Location = new System.Drawing.Point(340, 305);
+            this.buttonTest.Name = "buttonTest";
+            this.buttonTest.Size = new System.Drawing.Size(137, 35);
+            this.buttonTest.TabIndex = 34;
+            this.buttonTest.Text = "Тест";
+            this.buttonTest.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 354);
+            this.ClientSize = new System.Drawing.Size(734, 346);
+            this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label4);
@@ -418,6 +431,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.Button buttonTest;
     }
 }
 
