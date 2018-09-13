@@ -107,7 +107,9 @@ namespace StolotoParser_v2
 
             this.buttonTest.Enabled = false;
 
-            var buttons = this.Controls.OfType<IElementButton>()
+            this.tabControl1.Enabled = false;
+
+            var buttons = this.tabPage1.Controls.OfType<IElementButton>()
                 .OrderBy(bt => (bt as Button).TabIndex);
 
             foreach (var btn in buttons)
@@ -133,7 +135,9 @@ namespace StolotoParser_v2
 
                 this.buttonTest.Enabled = false;
 
-                var buttons = this.Controls.OfType<IElementButton>()
+                this.tabControl1.Enabled = false;
+
+                var buttons = this.tabPage1.Controls.OfType<IElementButton>()
                     .OrderBy(bt => (bt as Button).TabIndex);
 
                 foreach (var btn in buttons)
@@ -158,7 +162,9 @@ namespace StolotoParser_v2
 
                 this.buttonTest.Enabled = true;
 
-                var buttons = this.Controls.OfType<IElementButton>()
+                this.tabControl1.Enabled = true;
+
+                var buttons = this.tabPage1.Controls.OfType<IElementButton>()
                     .OrderBy(bt => (bt as Button).TabIndex);
 
                 foreach (var btn in buttons)
@@ -179,7 +185,7 @@ namespace StolotoParser_v2
         {
             var value = (int)(sender as NumericUpDown).Value;
 
-            foreach (var btn in this.Controls.OfType<IElementButton>())
+            foreach (var btn in this.tabPage1.Controls.OfType<IElementButton>())
             {
                 if (btn.Element == null) continue;
 
@@ -207,9 +213,11 @@ namespace StolotoParser_v2
 
                 this.buttonTest.Enabled = true;
 
+                this.tabControl1.Enabled = true;
+
                 this.buttonStop.Enabled = false;
 
-                var buttons = this.Controls.OfType<IElementButton>()
+                var buttons = this.tabPage1.Controls.OfType<IElementButton>()
                     .OrderBy(bt => (bt as Button).TabIndex);
 
                 foreach (var btn in buttons)
@@ -248,6 +256,8 @@ namespace StolotoParser_v2
 
                 this.buttonTest.Enabled = true;
 
+                this.tabControl1.Enabled = true;
+
                 var total = element.TotalCount.HasValue ? (int)element.TotalCount : 50;
 
                 this.progressBar2.Value = 0;
@@ -260,7 +270,7 @@ namespace StolotoParser_v2
 
         void IMainForm.SetButtons(Element[] elements)
         {
-            var buttons = this.Controls.OfType<IElementButton>()
+            var buttons = this.tabPage1.Controls.OfType<IElementButton>()
                 .OrderBy(bt => (bt as Button).TabIndex).ToList();
 
             for (int index = 0; index < elements.Length; index++)
