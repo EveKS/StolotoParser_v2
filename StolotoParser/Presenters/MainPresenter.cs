@@ -90,6 +90,10 @@ namespace StolotoParser_v2.Presenters
             {
                 this._mainForm.AppTextListBox(string.Format("Фаил {0} отсутствует", filePath));
             }
+            else if (stolotoParseResults.Count() == 0)
+            {
+                this._mainForm.AppTextListBox("Фаил пуст");
+            }
             else
             {
                 this.GetDetails(stolotoParseResults);
@@ -152,11 +156,6 @@ namespace StolotoParser_v2.Presenters
 
         private void GetDetails(IEnumerable<StolotoParseResult> stolotoParseResults)
         {
-            if (stolotoParseResults.Count() == 0)
-            {
-                this._mainForm.AppTextListBox("Фаил пуст");
-            }
-
             this._mainForm.AppTextListBox(string.Format("Всего тиражей в файле {0}, из них уникальных: {1}", stolotoParseResults.Count(), stolotoParseResults.Distinct(new BoxEqualityComparer()).Count()));
 
             this._mainForm.AppTextListBox(string.Format("Первый тираж в файле {0}, минимальный: {1}", stolotoParseResults.LastOrDefault().Draw, stolotoParseResults.Min(s => s.Draw)));
@@ -180,7 +179,12 @@ namespace StolotoParser_v2.Presenters
 
                     var draw = Convert.ToInt32(datas[0].Trim());
 
-                    var numbers = datas[1].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(n => Convert.ToInt32(n.TrimStart('0')));
+                    var numbers = datas[1].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(n =>
+                    {
+                        var tmp = n.TrimStart('0');
+
+                        return Convert.ToInt32(string.IsNullOrEmpty(tmp) ? "0" : tmp);
+                    });
 
                     stolotoParseResults.Add(new StolotoParseResult() { Draw = draw, Numbers = numbers.ToList() });
                 }
@@ -344,57 +348,62 @@ namespace StolotoParser_v2.Presenters
             var setData = true;
 
             this._startDraw = this._lastDrawCurrent + 1;
-
-            while (((parsingSettings.AddToAll ? true : (parsingSettings.AddToCurrent ? (this._startDraw > this._lastDrawCurrent || total > 0) : total > 0))))
+            try
             {
-                if (this._loadedPage == -1)
+                while (((parsingSettings.AddToAll ? true : (parsingSettings.AddToCurrent ? (this._startDraw > this._lastDrawCurrent || total > 0) : total > 0))))
                 {
-                    this._loadedPage = 1;
+                    if (this._loadedPage == -1)
+                    {
+                        this._loadedPage = 1;
 
-                    newFormat = string.Format(this._appSettings.Format, this._selectedElement.PathName, 1);
+                        newFormat = string.Format(this._appSettings.Format, this._selectedElement.PathName, 1);
+                    }
+                    else
+                    {
+                        newFormat = string.Format(this._appSettings.ContinueFormat, this._selectedElement.PathName, 1, this._startDraw);
+                    }
+
+                    total = total - this._drawInPage >= this._drawInPage ? total - this._drawInPage : 0;
+
+                    if (this._cancellationTokenSource.IsCancellationRequested) return;
+
+                    var json = this._htmlService.GetStringContent(newFormat);
+
+                    if (this._cancellationTokenSource.IsCancellationRequested) return;
+
+                    var postResulModel = this._jsonService.JsonConvertDeserializeObject<PostResulModel>(json);
+
+                    if (this._cancellationTokenSource.IsCancellationRequested) return;
+
+                    var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data, parsingSettings.ParsingExtraNumbers);
+
+                    if (this._cancellationTokenSource.IsCancellationRequested) return;
+
+                    fileWriteService.AppendResults(stolotoParseResults);
+
+                    if (setData)
+                    {
+                        setData = false;
+
+                        this._mainForm.UpdateDatas((new FilesData() { LastDrawCurrent = stolotoParseResults.Where(val => val.Numbers.Count > 0).Max(val => val.Draw) }));
+                    }
+
+                    this._selectedButton.ToolTip = new LotaryToolTip() { Status = postResulModel.Status, Page = page };
+
+                    var breakIteration = (parsingSettings.AddToCurrent ? stolotoParseResults.Any(val => val.Draw <= this._lastDrawCurrent) : total == 0)
+                        && (parsingSettings.AddToAll ? stolotoParseResults.Any(val => val.Draw <= this._lastDrawAll) : true);
+
+                    if (postResulModel.Stop || breakIteration) break;
+
+                    this._startDraw = stolotoParseResults.Min(val => val.Draw) - 1;
+
+                    page++;
+
+                    this._loadedPage++;
                 }
-                else
-                {
-                    newFormat = string.Format(this._appSettings.ContinueFormat, this._selectedElement.PathName, 1, this._startDraw);
-                }
-
-                total = total - this._drawInPage >= this._drawInPage ? total - this._drawInPage : 0;
-
-                if (this._cancellationTokenSource.IsCancellationRequested) return;
-
-                var json = this._htmlService.GetStringContent(newFormat);
-
-                if (this._cancellationTokenSource.IsCancellationRequested) return;
-
-                var postResulModel = this._jsonService.JsonConvertDeserializeObject<PostResulModel>(json);
-
-                if (this._cancellationTokenSource.IsCancellationRequested) return;
-
-                var stolotoParseResults = this._htmlParser.ParseHtml(postResulModel.Data, parsingSettings.ParsingExtraNumbers);
-
-                if (this._cancellationTokenSource.IsCancellationRequested) return;
-
-                fileWriteService.AppendResults(stolotoParseResults);
-
-                if (setData)
-                {
-                    setData = false;
-
-                    this._mainForm.UpdateDatas((new FilesData() { LastDrawCurrent = stolotoParseResults.Where(val => val.Numbers.Count > 0).Max(val => val.Draw) }));
-                }
-
-                this._selectedButton.ToolTip = new LotaryToolTip() { Status = postResulModel.Status, Page = page };
-
-                var breakIteration = (parsingSettings.AddToCurrent ? stolotoParseResults.Any(val => val.Draw <= this._lastDrawCurrent) : total == 0)
-                    && (parsingSettings.AddToAll ? stolotoParseResults.Any(val => val.Draw <= this._lastDrawAll) : true);
-
-                if (postResulModel.Stop || breakIteration) break;
-
-                this._startDraw = stolotoParseResults.Min(val => val.Draw) - 1;
-
-                page++;
-
-                this._loadedPage++;
+            }
+            catch (Exception ex)
+            {
             }
 
             fileWriteService.Finalize();

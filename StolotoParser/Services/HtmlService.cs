@@ -18,11 +18,20 @@ namespace StolotoParser_v2.Services
 
         string IHtmlService.GetStringContent(string url)
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                this.SetHeaders(client);
 
-                return client.UploadString(url, "");
+                using (WebClient client = new WebClient())
+                {
+                    this.SetHeaders(client);
+
+                    return client.UploadString(url, "");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
     }

@@ -64,7 +64,7 @@ namespace StolotoParser_v2.Services
             this._newDraws = new List<StolotoParseResult>();
 
             this._newDrawsAll = new List<StolotoParseResult>();
-    }
+        }
 
         public void InitialOldData()
         {
@@ -84,29 +84,40 @@ namespace StolotoParser_v2.Services
 
         private void Update(bool writeToAllFile)
         {
-            if (!File.Exists(writeToAllFile ? this._fileAllPath : this._filePath)) return;
-
-            using (StreamReader sr = new StreamReader(writeToAllFile ? this._fileAllPath : this._filePath))
+            try
             {
-                while (!sr.EndOfStream)
+
+                if (!File.Exists(writeToAllFile ? this._fileAllPath : this._filePath)) return;
+
+                using (StreamReader sr = new StreamReader(writeToAllFile ? this._fileAllPath : this._filePath))
                 {
-                    string firstRow = sr.ReadLine();
-
-                    var datas = firstRow.Split('_');
-
-                    var draw = Convert.ToInt32(datas[0].Trim());
-
-                    var numbers = datas[1].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(n => Convert.ToInt32(n.TrimStart('0')));
-
-                    if (writeToAllFile)
+                    while (!sr.EndOfStream)
                     {
-                        this._oldDrawsAll.Add(new StolotoParseResult() { Draw = draw, Numbers = numbers.ToList() });
-                    }
-                    else
-                    {
-                        this._oldDraws.Add(new StolotoParseResult() { Draw = draw, Numbers = numbers.ToList() });
+                        string firstRow = sr.ReadLine();
+
+                        var datas = firstRow.Split('_');
+
+                        var draw = Convert.ToInt32(datas[0].Trim());
+
+                        var numbers = datas[1].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(n => {
+                            var tmp = n.TrimStart('0');
+
+                            return Convert.ToInt32(string.IsNullOrEmpty(tmp) ? "0" : tmp);
+                        });
+
+                        if (writeToAllFile)
+                        {
+                            this._oldDrawsAll.Add(new StolotoParseResult() { Draw = draw, Numbers = numbers.ToList() });
+                        }
+                        else
+                        {
+                            this._oldDraws.Add(new StolotoParseResult() { Draw = draw, Numbers = numbers.ToList() });
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
             }
         }
 
@@ -149,44 +160,50 @@ namespace StolotoParser_v2.Services
 
         private void WriteInfo(IEnumerable<StolotoParseResult> stolotoParseResults, int fistProgresValue, bool toAllFile = false, bool setStopDraw = false)
         {
-            var path = toAllFile ? this._fileAllPath : this._filePath;
-
-            var stopDraw = setStopDraw ? toAllFile ? this._stopDrowAll : this._stopDrowCurrent : -1;
-
-            var collection = stolotoParseResults.OrderBy(v => -v.Draw).Distinct(new BoxEqualityComparer());
-
-            var maximum = collection.Count();
-
-            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
-            using (StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.Default))
+            try
             {
-                foreach (var stolotoParseResult in collection)
+                var path = toAllFile ? this._fileAllPath : this._filePath;
+
+                var stopDraw = setStopDraw ? toAllFile ? this._stopDrowAll : this._stopDrowCurrent : -1;
+
+                var collection = stolotoParseResults.OrderBy(v => -v.Draw).Distinct(new BoxEqualityComparer());
+
+                var maximum = collection.Count();
+
+                using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                using (StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.Default))
                 {
-                    if (this._tocken.IsCancellationRequested) return;
-
-                    if (!toAllFile)
+                    foreach (var stolotoParseResult in collection)
                     {
-                        fistProgresValue++;
+                        if (this._tocken.IsCancellationRequested) return;
 
-                        this._setProgres(fistProgresValue, maximum);
+                        if (!toAllFile)
+                        {
+                            fistProgresValue++;
+
+                            this._setProgres(fistProgresValue, maximum);
+                        }
+
+                        if (stolotoParseResult.Numbers == null || stolotoParseResult.Numbers.Count == 0)
+                        {
+                            this._uppText(string.Format("{0} тираж ожидается", stolotoParseResult.Draw));
+
+                            continue;
+                        }
+
+                        var info = string.Format(this._fileFormat, stolotoParseResult.Draw, string.Join(" ", stolotoParseResult.Numbers.Select(val => val.ToString("d2"))));
+
+                        if (!toAllFile)
+                        {
+                            this._uppText(info);
+                        }
+
+                        streamWriter.WriteLine(info);
                     }
-
-                    if (stolotoParseResult.Numbers == null || stolotoParseResult.Numbers.Count == 0)
-                    {
-                        this._uppText(string.Format("{0} тираж ожидается", stolotoParseResult.Draw));
-
-                        continue;
-                    }
-
-                    var info = string.Format(this._fileFormat, stolotoParseResult.Draw, string.Join(" ", stolotoParseResult.Numbers.Select(val => val.ToString("d2"))));
-
-                    if (!toAllFile)
-                    {
-                        this._uppText(info);
-                    }
-
-                    streamWriter.WriteLine(info);
                 }
+            }
+            catch (Exception ex)
+            {
             }
         }
     }
