@@ -26,7 +26,9 @@ namespace StolotoParser_v2
 
             IHtmlParser htmlParser = new HtmlParser();
 
-            var presenter = new MainPresenter(form, jsonService, htmlService, htmlParser);
+            ILoggerFactory loggerFactory = new LoggerFactory();
+
+            var presenter = new MainPresenter(form, jsonService, htmlService, htmlParser, loggerFactory);
 
             Application.Run(form);
         }

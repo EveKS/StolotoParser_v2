@@ -77,7 +77,9 @@
     <Compile Include="Services\IHtmlParser.cs" />
     <Compile Include="Services\IHtmlService.cs" />
     <Compile Include="Services\IJsonService.cs" />
+    <Compile Include="Services\ILoggerFactory.cs" />
     <Compile Include="Services\JsonService.cs" />
+    <Compile Include="Services\LoggerFactory.cs" />
     <Compile Include="UserControls\ElementButton.cs">
       <SubType>Component</SubType>
     </Compile>

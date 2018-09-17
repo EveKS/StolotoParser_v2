@@ -29,6 +29,8 @@ namespace StolotoParser_v2
 
         event EventHandler ButtonTestClick;
 
+        event EventHandler MainFormFormClosing;
+
         void SetButtons(Element[] elements);
 
         void SetLoaded();
@@ -42,6 +44,8 @@ namespace StolotoParser_v2
         void UpdateProgres(int value, int max);
 
         void UpdateSelectedStatuses(Element element, string statusText);
+
+        void SetLoadingProgress(int value, int max);
     }
 
     public partial class MainForm : Form, IMainForm
@@ -64,6 +68,8 @@ namespace StolotoParser_v2
 
         public event EventHandler ButtonTestClick;
 
+        public event EventHandler MainFormFormClosing;
+
         private IElementButton _selectedButton; 
 
         public MainForm()
@@ -80,6 +86,8 @@ namespace StolotoParser_v2
 
             this.Load += new EventHandler(this.MainForm_Load);
 
+            this.FormClosing += MainForm_FormClosing;
+
             this.numericUpDown1.ValueChanged += this.NumericUpDown1_ValueChanged;
 
             this.buttonStop.Click += ButtonStop_Click;
@@ -89,6 +97,23 @@ namespace StolotoParser_v2
             this.getLastDraw.Click += GetLastDraw_Click;
 
             this.buttonTest.Click += ButtonTest_Click;
+
+            this.checkBox1.Click += CheckBox1_Click;
+        }
+
+        private void CheckBox1_Click(object sender, EventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+
+            numericUpDown1.Enabled = !checkBox.Checked;
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.MainFormFormClosing != null)
+            {
+                this.MainFormFormClosing.Invoke(null, EventArgs.Empty);
+            }
         }
 
         private void ButtonTest_Click(object sender, EventArgs e)
@@ -127,6 +152,8 @@ namespace StolotoParser_v2
         {
             this.InvoceAction(new Action(() =>
             {
+                this.progressBar1.Value = 0;
+
                 this.progressBar2.Value = 0;
 
                 (sender as Button).Enabled = false;
@@ -195,6 +222,15 @@ namespace StolotoParser_v2
             }
         }
 
+        public void SetLoadingProgress(int value, int max)
+        {
+            this.InvoceAction(new Action(() => {
+                this.progressBar1.Maximum = max;
+
+                this.progressBar1.Value = value > max ? max : value;
+            }));
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (this.OnFormLoad != null)
@@ -260,6 +296,8 @@ namespace StolotoParser_v2
 
                 var total = element.TotalCount.HasValue ? (int)element.TotalCount : 50;
 
+                this.progressBar1.Value = 0;
+
                 this.progressBar2.Value = 0;
 
                 this.progressBar2.Maximum = total > 0 ? total : total;
@@ -312,6 +350,8 @@ namespace StolotoParser_v2
         {
             this.InvoceAction(new Action(() =>
             {
+                this.progressBar1.Value = 0;
+
                 this.progressBar2.Value = 0;
 
                 this.fileDataCurrrent.Text = string.Empty;

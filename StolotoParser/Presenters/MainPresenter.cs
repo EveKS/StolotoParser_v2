@@ -41,8 +41,10 @@ namespace StolotoParser_v2.Presenters
 
         private readonly IHtmlParser _htmlParser;
 
+        private readonly  ILoggerFactory _loggerFactory;
+
         public MainPresenter(IMainForm mainForm, IJsonService jsonService, IHtmlService htmlService,
-            IHtmlParser htmlParser)
+            IHtmlParser htmlParser, ILoggerFactory loggerFactory)
         {
             this._mainForm = mainForm;
 
@@ -51,6 +53,8 @@ namespace StolotoParser_v2.Presenters
             this._htmlService = htmlService;
 
             this._htmlParser = htmlParser;
+
+            this._loggerFactory = loggerFactory;
 
             this._mainForm.OnFormLoad += new EventHandler(this._mainForm_OnLoad);
 
@@ -63,6 +67,13 @@ namespace StolotoParser_v2.Presenters
             this._mainForm.GetLastDrawClick += _mainForm_GetLastDrawClick;
 
             this._mainForm.ButtonTestClick += _mainForm_ButtonTestClick;
+
+            this._mainForm.MainFormFormClosing += _mainForm_MainFormFormClosing;
+        }
+
+        private void _mainForm_MainFormFormClosing(object sender, EventArgs e)
+        {
+            this._loggerFactory.CloseProgramLogged();
         }
 
         private void _mainForm_ButtonTestClick(object sender, EventArgs e)
@@ -195,6 +206,8 @@ namespace StolotoParser_v2.Presenters
 
         private void _mainForm_GetLastDrawClick(object sender, EventArgs e)
         {
+            try
+            {
             this._selectedButton = sender as IElementButton;
 
             this._selectedElement = this._selectedButton.Element;
@@ -213,6 +226,12 @@ namespace StolotoParser_v2.Presenters
 
                     this._mainForm.SetLoaded();
                 });
+
+            }
+            catch (Exception ex)
+            {
+                this._loggerFactory.ErrorLogged(ex);
+            }
         }
 
         private void _mainForm_StopButtonClick(object sender, EventArgs e)
@@ -263,6 +282,8 @@ namespace StolotoParser_v2.Presenters
 
         private void _mainForm_OnLoad(object sender, EventArgs e)
         {
+            this._loggerFactory.RunProgramLogged();
+
             this.GetSettings();
 
             this._mainForm.SetButtons(this._appSettings.Elements);
@@ -337,19 +358,22 @@ namespace StolotoParser_v2.Presenters
 
             var stopTakeDrawCurrent = parsingSettings.AddToCurrent ? this._lastDrawCurrent : total;
 
-            IFileWriteService fileWriteService = new FileWriteService(parsingSettings, this._selectedElement, this._cancellationTokenSource.Token, this._mainForm.UpdateProgres, this._mainForm.AppTextListBox, stopTakeDrawCurrent, this._lastDrawAll);
+            IFileWriteService fileWriteService = new FileWriteService(parsingSettings, this._selectedElement, this._cancellationTokenSource.Token, this._mainForm.UpdateProgres, this._mainForm.AppTextListBox, stopTakeDrawCurrent, this._lastDrawAll, this._loggerFactory.ErrorLogged);
 
             fileWriteService.InitialOldData();
-
-            var max = total;
 
             var page = 1;
 
             var setData = true;
 
             this._startDraw = this._lastDrawCurrent + 1;
+
             try
             {
+                var iteration = 0;
+
+                var maximum = total;
+
                 while (((parsingSettings.AddToAll ? true : (parsingSettings.AddToCurrent ? (this._startDraw > this._lastDrawCurrent || total > 0) : total > 0))))
                 {
                     if (this._loadedPage == -1)
@@ -379,6 +403,13 @@ namespace StolotoParser_v2.Presenters
 
                     if (this._cancellationTokenSource.IsCancellationRequested) return;
 
+                    if(iteration == 0)
+                    {
+                        maximum = parsingSettings.AddToCurrent ? stolotoParseResults.Max(val => val.Draw) - this._lastDrawCurrent : maximum;
+                    }
+
+                    this._mainForm.SetLoadingProgress(maximum - total, maximum);
+
                     fileWriteService.AppendResults(stolotoParseResults);
 
                     if (setData)
@@ -400,6 +431,8 @@ namespace StolotoParser_v2.Presenters
                     page++;
 
                     this._loadedPage++;
+
+                    iteration++;
                 }
             }
             catch (Exception ex)

@@ -19,6 +19,8 @@ namespace StolotoParser_v2.Services
 
         private readonly Action<string> _uppText;
 
+        private readonly Action<Exception> _errorLogged;
+
         private readonly string _fileFormat;
 
         private readonly string _filePath;
@@ -38,8 +40,10 @@ namespace StolotoParser_v2.Services
         private List<StolotoParseResult> _newDraws;
 
         private List<StolotoParseResult> _newDrawsAll;
+      
 
-        public FileWriteService(ParsingSettings parsingSettings, Element element, CancellationToken tocken, Action<int, int> setProgres, Action<string> uppText, int stopDrowCurrent, int stopDrowAll)
+        public FileWriteService(ParsingSettings parsingSettings, Element element, CancellationToken tocken,
+            Action<int, int> setProgres, Action<string> uppText, int stopDrowCurrent, int stopDrowAll, Action<Exception> errorLogged)
         {
             this._parsingSettings = parsingSettings;
 
@@ -54,6 +58,8 @@ namespace StolotoParser_v2.Services
             this._stopDrowAll = stopDrowAll;
 
             this._stopDrowCurrent = stopDrowCurrent;
+
+            this._errorLogged = errorLogged;
 
             this._fileFormat = "{0} _ {1}";
 
@@ -118,6 +124,7 @@ namespace StolotoParser_v2.Services
             }
             catch (Exception ex)
             {
+                this._errorLogged(ex);
             }
         }
 
@@ -193,7 +200,7 @@ namespace StolotoParser_v2.Services
 
                         var info = string.Format(this._fileFormat, stolotoParseResult.Draw, string.Join(" ", stolotoParseResult.Numbers.Select(val => val.ToString("d2"))));
 
-                        if (!toAllFile)
+                        if (!toAllFile && this._stopDrowCurrent < stolotoParseResult.Draw)
                         {
                             this._uppText(info);
                         }
@@ -204,6 +211,7 @@ namespace StolotoParser_v2.Services
             }
             catch (Exception ex)
             {
+                this._errorLogged(ex);
             }
         }
     }

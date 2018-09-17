@@ -44,10 +44,11 @@
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.elementButton10 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton11 = new StolotoParser_v2.UserControls.ElementButton();
             this.elementButton12 = new StolotoParser_v2.UserControls.ElementButton();
@@ -78,6 +79,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.progressBar2);
             this.tabPage1.Controls.Add(this.buttonTest);
             this.tabPage1.Controls.Add(this.checkBox3);
             this.tabPage1.Controls.Add(this.label2);
@@ -91,7 +93,7 @@
             this.tabPage1.Controls.Add(this.buttonStop);
             this.tabPage1.Controls.Add(this.buttonStart);
             this.tabPage1.Controls.Add(this.listBox1);
-            this.tabPage1.Controls.Add(this.progressBar2);
+            this.tabPage1.Controls.Add(this.progressBar1);
             this.tabPage1.Controls.Add(this.textBox1);
             this.tabPage1.Controls.Add(this.numericUpDown1);
             this.tabPage1.Controls.Add(this.label1);
@@ -149,7 +151,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(163, 66);
+            this.label2.Location = new System.Drawing.Point(163, 96);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(21, 13);
             this.label2.TabIndex = 61;
@@ -158,7 +160,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 66);
+            this.label4.Location = new System.Drawing.Point(8, 96);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(84, 13);
             this.label4.TabIndex = 60;
@@ -188,7 +190,7 @@
             // getLastDraw
             // 
             this.getLastDraw.Enabled = false;
-            this.getLastDraw.Location = new System.Drawing.Point(272, 59);
+            this.getLastDraw.Location = new System.Drawing.Point(272, 89);
             this.getLastDraw.Name = "getLastDraw";
             this.getLastDraw.Size = new System.Drawing.Size(132, 26);
             this.getLastDraw.TabIndex = 57;
@@ -198,7 +200,7 @@
             // labelLastDraw
             // 
             this.labelLastDraw.AutoSize = true;
-            this.labelLastDraw.Location = new System.Drawing.Point(410, 66);
+            this.labelLastDraw.Location = new System.Drawing.Point(410, 96);
             this.labelLastDraw.Name = "labelLastDraw";
             this.labelLastDraw.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelLastDraw.Size = new System.Drawing.Size(0, 13);
@@ -208,7 +210,7 @@
             // fileDataAll
             // 
             this.fileDataAll.AutoSize = true;
-            this.fileDataAll.Location = new System.Drawing.Point(190, 66);
+            this.fileDataAll.Location = new System.Drawing.Point(190, 96);
             this.fileDataAll.Name = "fileDataAll";
             this.fileDataAll.Size = new System.Drawing.Size(0, 13);
             this.fileDataAll.TabIndex = 55;
@@ -216,7 +218,7 @@
             // fileDataCurrrent
             // 
             this.fileDataCurrrent.AutoSize = true;
-            this.fileDataCurrrent.Location = new System.Drawing.Point(92, 66);
+            this.fileDataCurrrent.Location = new System.Drawing.Point(98, 96);
             this.fileDataCurrrent.Name = "fileDataCurrrent";
             this.fileDataCurrrent.Size = new System.Drawing.Size(0, 13);
             this.fileDataCurrrent.TabIndex = 54;
@@ -250,19 +252,19 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(11, 91);
+            this.listBox1.Location = new System.Drawing.Point(11, 117);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(465, 199);
+            this.listBox1.Size = new System.Drawing.Size(465, 173);
             this.listBox1.TabIndex = 51;
             // 
-            // progressBar2
+            // progressBar1
             // 
-            this.progressBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar2.Location = new System.Drawing.Point(11, 33);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(465, 20);
-            this.progressBar2.TabIndex = 50;
+            this.progressBar1.Location = new System.Drawing.Point(11, 33);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(465, 20);
+            this.progressBar1.TabIndex = 50;
             // 
             // textBox1
             // 
@@ -290,6 +292,15 @@
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 48;
             this.label1.Text = "(от 0 д о 0)";
+            // 
+            // progressBar2
+            // 
+            this.progressBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar2.Location = new System.Drawing.Point(11, 59);
+            this.progressBar2.Name = "progressBar2";
+            this.progressBar2.Size = new System.Drawing.Size(465, 20);
+            this.progressBar2.TabIndex = 64;
             // 
             // elementButton10
             // 
@@ -457,7 +468,7 @@
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.ProgressBar progressBar2;
+        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
@@ -474,6 +485,7 @@
         private UserControls.ElementButton elementButton2;
         private UserControls.ElementButton elementButton1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ProgressBar progressBar2;
     }
 }
 
