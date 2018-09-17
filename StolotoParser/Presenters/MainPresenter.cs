@@ -408,7 +408,7 @@ namespace StolotoParser_v2.Presenters
                         maximum = parsingSettings.AddToCurrent ? stolotoParseResults.Max(val => val.Draw) - this._lastDrawCurrent : maximum;
                     }
 
-                    this._mainForm.SetLoadingProgress(maximum - total, maximum);
+                    this._mainForm.SetLoadingProgress(maximum > total ? maximum - total : 0, maximum);
 
                     fileWriteService.AppendResults(stolotoParseResults);
 
@@ -437,6 +437,7 @@ namespace StolotoParser_v2.Presenters
             }
             catch (Exception ex)
             {
+                this._loggerFactory.ErrorLogged(ex);
             }
 
             fileWriteService.Finalize();
