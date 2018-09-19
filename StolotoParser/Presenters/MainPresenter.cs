@@ -348,6 +348,8 @@ namespace StolotoParser_v2.Presenters
 
         private void TaskBody()
         {
+            this.GetDatas(this._selectedElement);
+
             var parsingSettings = this._mainForm.ParsingSettings;
 
             var newFormat = "";
