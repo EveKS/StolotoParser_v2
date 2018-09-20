@@ -376,6 +376,8 @@ namespace StolotoParser_v2.Presenters
 
                 var maximum = total;
 
+                var loaded = 0;
+
                 while (((parsingSettings.AddToAll ? true : (parsingSettings.AddToCurrent ? (this._startDraw > this._lastDrawCurrent || total > 0) : total > 0))))
                 {
                     if (this._loadedPage == -1)
@@ -410,7 +412,9 @@ namespace StolotoParser_v2.Presenters
                         maximum = parsingSettings.AddToCurrent ? stolotoParseResults.Max(val => val.Draw) - this._lastDrawCurrent : maximum;
                     }
 
-                    this._mainForm.SetLoadingProgress(maximum > total ? maximum - total : 0, maximum);
+                    loaded += stolotoParseResults.Count;
+
+                    this._mainForm.SetLoadingProgress(loaded, maximum > loaded ? maximum : loaded);
 
                     fileWriteService.AppendResults(stolotoParseResults);
 
