@@ -339,9 +339,9 @@ namespace StolotoParser_v2
             {
                 return new ParsingSettings()
                 {
-                    AddToAll = this.checkBox2.Checked,
-                    AddToCurrent = this.checkBox1.Checked,
-                    ParsingExtraNumbers = this.checkBox3.Checked
+                    AddToAll = this.checkBox2.Checked && this.checkBox2.Enabled,
+                    AddToCurrent = this.checkBox1.Checked && this.checkBox1.Enabled,
+                    ParsingExtraNumbers = this.checkBox3.Checked && this.checkBox3.Enabled
                 };
             }
         }
