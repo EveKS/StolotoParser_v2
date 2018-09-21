@@ -162,7 +162,7 @@ namespace StolotoParser_v2
 
                 this.buttonTest.Enabled = false;
 
-                this.tabControl1.Enabled = false;
+                //this.tabControl1.Enabled = false;
 
                 var buttons = this.tabPage1.Controls.OfType<IElementButton>()
                     .OrderBy(bt => (bt as Button).TabIndex);
